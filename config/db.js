@@ -1,3 +1,3 @@
 module.exports = {
-  url: 'mongodb://localhost:8080/meanstack'
-}
+  url: 'mongodb://127.0.0.1/celldemand'
+};
