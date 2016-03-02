@@ -1,14 +1,16 @@
 <section class="form-page" ng-controller="LocationController">
+  <h4>Select a location</h4>
   <select id="location-selection" class="form-control">
+    <option>Select a location</option>
     <option ng-repeat="loc in townNames track by $index" value="{{ loc }}"> {{ loc }} </option>
   </select>
 
-  <div id="location-content" class="loc-content" ng-controller="LocationController">
-      <h1>{{ location.name }}</h1>
+  <section class="customer-form" id="spec-form">
+    <div id="location-content" class="loc-content">
+        <h1>{{ location.name }}</h1>
 
-      <p>{{ location.description }}</p>
-  </div>
-  <div class="customer-form">
+        <p>{{ location.description }}</p>
+    </div>
     <form name="cust-form" ng-submit="makeCustomer">
       <div class="form-group">
         <label for="email">Email address</label>
@@ -29,6 +31,10 @@
       <div class="form-group">
         <label for="lastName">City/Town</label>
         <input type="text" class="form-control" id="customer-city" placeholder="city/town/area">
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="text" class="form-control" id="customer-phone" placeholder="000-000-0000">
       </div>
       <div class="form-inline">
         <div class="form-group">
@@ -98,12 +104,12 @@
         <label for="options">Choose an Option</label>
         <div class="checkbox" ng-repeat="option in location.options">
           <label>
-            <input type="checkbox" value="1">
+            <input type="checkbox" id="customer-option" value="">
               {{ option }}
           </label>
         </div>
       </div>
-      <button type="submit" class="btn btn-default">Submit</button>
+      <button id="submit-customer" class="btn btn-default">Submit</button>
     </form>
-  <div>
+  <section>
 </section>

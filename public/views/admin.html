@@ -1,0 +1,38 @@
+<section class="">
+    <h1>Admin Panel</h1>
+
+    <p>{{ tagline }}</p>
+    <button id="add-location" class="btn btn-default">&#43&nbsp&nbspLocation</button>
+    <section id="location-add-form">
+      <form id="customer-signup-form" name="location-form" ng-submit="makeCustomer">
+        <div class="form-group col-md-5 col-sm-5 col-xs-12">
+          <label for="name">Project Name</label>
+          <input type="text" class="form-control" id="location-name" placeholder="name">
+        </div>
+        <div class="form-group col-md-5 col-sm-5 col-xs-12">
+          <label for="description">Description</label>
+          <input type="text" class="form-control" id="location-description" placeholder="descibe what you can">
+        </div>
+        <div class="form-group col-md-5 col-sm-5 col-xs-12">
+          <label for="targetareas">Target Areas Impacted</label>
+          <input type="text" class="form-control" id="location-target-areas" placeholder="target areas?">
+        </div>
+        <div class="form-group col-md-5 col-sm-5 col-xs-12">
+          <label for="summary">Summary</label>
+          <input type="text" class="form-control" id="location-summary" placeholder="detail the summary ... ">
+        </div>
+        <div class="form-group col-md-5 col-sm-5 col-xs-12">
+          <label for="numberforsuccess">Number of committed required for this Area</label>
+          <input type="number" class="form-control" id="location-req-num" placeholder="100">
+        </div>
+        <div class="form-group col-md-5 col-sm-5 col-xs-12 option-section">
+          <label for="options">Options</label>
+          <div class="form-inline row">
+            <input type="text" class="form-control col-xs-10 col-md-5" id="location-option-1" placeholder="Option 1 - 12mbs/$49.99/mo">
+            <button id="add-option" class="btn btn-default col-xs-2 add-option">&#43</button>
+          </div>
+        </div>
+        <button id="add-location-btn" class="form-group btn btn-default col-xs-2 add-option">Submit</button>
+      </form>
+    </section>
+</section>

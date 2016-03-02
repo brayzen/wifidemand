@@ -44,8 +44,6 @@ app.use(express.static(__dirname + '/public'));
 app.use('/api/location', location);
 app.use('/api/customer', customer);
 app.get('/', function(req, res) {
-  // console.log(res);
-  // res.body.locationNames = ['alma', 'breck', 'dillon'];
   res.sendfile('./public/views/index.html'); // load our public/index.html file
 });
 

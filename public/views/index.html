@@ -17,10 +17,10 @@
 
     <!-- ANGULAR CUSTOM -->
     <script src="js/controllers/MainCtrl.js"></script>
-    <script src="js/controllers/NerdCtrl.js"></script>
+    <script src="js/controllers/AdminCtrl.js"></script>
     <script src="js/controllers/LocationCtrl.js"></script>
     <script src="js/controllers/CustomerCtrl.js"></script>
-    <script src="js/services/NerdService.js"></script>
+    <script src="js/services/AdminService.js"></script>
     <script src="js/services/CustomerService.js"></script>
     <script src="js/services/LocationService.js"></script>
     <script src="js/appRoutes.js"></script>
@@ -29,14 +29,14 @@
 <body ng-app="sampleApp" >
   <div class="container">
     <!-- HEADER -->
-    <nav class="navbar navbar-inverse">
+    <nav class="container-fluid navbar navbar-inverse">
         <div class="navbar-header">
             <a class="navbar-brand" href="#/">Raylife Wifi</a>
         </div>
 
         <!-- LINK TO OUR PAGES. ANGULAR HANDLES THE ROUTING HERE -->
         <ul class="nav navbar-nav">
-            <li><a href="#/nerds">Nerds</a></li>
+            <li><a href="#/admin">Admin</a></li>
             <li><a href="#/locations">Locations</a></li>
         </ul>
 

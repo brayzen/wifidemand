@@ -1,7 +1,31 @@
- // app/routes.js
-
-// grab the nerd model we just created
+var express = require('express');
+var router = express.Router();
 var db = require('../models/customer');
+
+router.route('/')
+  .post( function(req, res) {
+    console.log("made a POST request to make a CUSTOMER");
+    console.log(req.body);
+    var reqbody = req.body;
+    db.insert({reqbody}, function(err, result) {
+      if (err)
+          res.send(err);
+      console.log(result);
+      res.json(result); // return all nerds in JSON format
+    });
+  })
+  //   } else {
+  //     console.log("made a request to location");
+  //     var locationName = req.params.name;
+  //     loc.find({name: locationName}, function(err, result) {
+  //       if (err)
+  //           res.send(err);
+  //       console.log(result);
+  //       res.json(result); // return all nerds in JSON format
+  //     });
+  //   }
+  // })
+
 
     module.exports = function(app) {
 
