@@ -6,6 +6,8 @@ var app            = express();
 var bodyParser     = require('body-parser');
 var methodOverride = require('method-override');
 var mongoose       = require('mongoose');
+var location = require('./app/routes/locationRoutes');
+var customer = require('./app/routes/customerRoutes');
 
 // configuration ===========================================
 
@@ -13,7 +15,7 @@ var mongoose       = require('mongoose');
 var db = require('./config/db');
 
 // set our port
-var port = process.env.PORT || 7000;
+var port = process.env.PORT || 4080;
 
 // connect to our mongoDB database
 // (uncomment after you enter in your own credentials in config/db.js)
@@ -36,10 +38,17 @@ app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(express.static(__dirname + '/public'));
 
 // routes ==================================================
-require('./app/routes')(app); // configure our routes
+// require('./app/routes')(app); // configure our routes
+// require('./app/routes/customerRoutes')(app);
+// require('./app/routes/locationRoutes')(app);
+app.use('/api/location', location);
+app.use('/api/customer', customer);
+app.get('/', function(req, res) {
+  res.sendfile('./public/views/index.html'); // load our public/index.html file
+});
 
 // start app ===============================================
-// startup our app at http://localhost:8080
+// startup our app at http://localhost:4080
 app.listen(port);
 
 // shoutout to the user

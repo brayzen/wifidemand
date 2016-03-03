@@ -42,14 +42,14 @@ var appFiles = {
 // TASKS ========================================================================
 
 gulp.task('clean', function(){
-  return gulp.src(dest + '/', {read: false}).pipe(clean());
+  return gulp.src(dest + '/public/', {read: false}).pipe(clean());
 });
 
 gulp.task('lessify', function(){
   return gulp.src('./public/less/main.less')
     .pipe(lessify())
     .pipe(minifyCss())
-    .pipe(gulp.dest('./dist/public/css'))
+    .pipe(gulp.dest('./public/css/'))
 });
 
 gulp.task('jshint', function(){
@@ -59,7 +59,7 @@ gulp.task('jshint', function(){
   gulp.src(appFiles.misc)
       .pipe(jshint())
       .pipe(jshint.reporter('default'));
-})
+});
 
 gulp.task('start', function () {
   nodemon({
@@ -69,10 +69,10 @@ gulp.task('start', function () {
   })
 })
 
-gulp.task('watch', function() {
-  livereload.listen();
-  gulp.watch('./public/**', ['default']);
-});
+// gulp.task('watch', function() {
+//   livereload.listen();
+//   gulp.watch('./public/**', ['default']);
+// });
 
 gulp.task('concat', function() {
   gulp.src(appFiles.combinedjs)// + ',' + appFiles.vendor)
@@ -81,23 +81,23 @@ gulp.task('concat', function() {
     .pipe(gulp.dest('./dist/public/js/'));
 });
 
-gulp.task('uglify', function(){
-  gulp.src(appFiles.combinedjs)
-    .pipe(uglify())
-    .pipe(gulp.dest('./dist/public/js/'));
-});
+// gulp.task('uglify', function(){
+//   gulp.src(appFiles.combinedjs)
+//     .pipe(uglify())
+//     .pipe(gulp.dest('./dist/public/js/'));
+// });
 
 gulp.task('copy', function() {
   //server.js
   gulp.src(appFiles.server)
       .pipe(gulp.dest(dest + '/'));
   //images
-  gulp.src('./public/img/*.{jpg, jpeg, png}')
-      .pipe(gulp.dest(dest + publicDir.img));
+  // gulp.src('./public/img/*.{jpg, jpeg, png}')
+  //     .pipe(gulp.dest(dest + publicDir.img));
   //views
   console.log(appFiles.views);
   gulp.src(appFiles.views)
       .pipe(gulp.dest(dest + '/'));
 })
 
-gulp.task('default', ['jshint', 'clean', 'lessify', 'uglify', 'copy', 'start'])//, 'watch'])
+gulp.task('default', ['jshint', 'clean', 'lessify', 'copy', 'start'])//, 'watch'])
