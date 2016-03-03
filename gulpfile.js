@@ -18,22 +18,25 @@ var dest = './dist';
 var publicDir = {
   img: '/public/img/',
   css: '/public/css/',
+  less: '/public/less/',
   js:  '/public/js/',
   views: '/public/views/'
 }
 
 //Vendor path var
-var bowerDir = cur + '/public/libs/';
+var bowerDir = curr + '/public/libs/';
 
 //BEFORE File type collected vars
 var appFiles = {
-  vendor: [bowerDir + 'jquery/dist/*.min.js', bowerDir + '**/*.min.js']
-  js:     [publicDir.js + '**/*.js'],
-  css:    [bowerDir + '**/*.min.css'],
-  less:   ['public/less/*.less'],
-  misc:   [cur + '/app/**', cur + '/config/**'],
-  server: ['./server.js'],
-  jade:   [!baseDirs.app + 'public/index.jade', baseDirs.app + 'public/views/**/*.jade']
+  vendor:   [bowerDir + 'jquery/dist/*.min.js', bowerDir + '**/*.min.js'],
+  js:       curr + publicDir.js + '**/*.js',
+  combinedjs: ["./public/libs/jquery/dist/*.min.js","./public/libs/**/*.min.js", "./public/js/**/*.js"],
+  css:      bowerDir + '**/*.min.css',
+  less:     'public/less/*.less',
+  misc:     [curr + '/app/**', curr + '/config/**'],
+  server:   './server.js',
+  views:    './public/views/**/*.html',
+  jade:     [!curr + 'public/index.jade', curr + 'public/views/**/*.jade']
 };
 
 // TASKS ========================================================================
@@ -42,7 +45,59 @@ gulp.task('clean', function(){
   return gulp.src(dest + '/', {read: false}).pipe(clean());
 });
 
-gulp.task('copy', function(){
-  return gulp.src(appFiles).pipe(gulp.dest(dest + '/'));
+gulp.task('lessify', function(){
+  return gulp.src('./public/less/main.less')
+    .pipe(lessify())
+    .pipe(minifyCss())
+    .pipe(gulp.dest('./dist/public/css'))
+});
+
+gulp.task('jshint', function(){
+  gulp.src([appFiles.server, './public/js/**/*.js']) //only js files, server
+      .pipe(jshint())
+      .pipe(jshint.reporter('default'));
+  gulp.src(appFiles.misc)
+      .pipe(jshint())
+      .pipe(jshint.reporter('default'));
 })
 
+gulp.task('start', function () {
+  nodemon({
+    script: 'server.js'
+  , ext: 'js html'
+  , env: { 'NODE_ENV': 'development' }
+  })
+})
+
+gulp.task('watch', function() {
+  livereload.listen();
+  gulp.watch('./public/**', ['default']);
+});
+
+gulp.task('concat', function() {
+  gulp.src(appFiles.combinedjs)// + ',' + appFiles.vendor)
+    .pipe(concat('only.js'))
+    .pipe(uglify())
+    .pipe(gulp.dest('./dist/public/js/'));
+});
+
+gulp.task('uglify', function(){
+  gulp.src(appFiles.combinedjs)
+    .pipe(uglify())
+    .pipe(gulp.dest('./dist/public/js/'));
+});
+
+gulp.task('copy', function() {
+  //server.js
+  gulp.src(appFiles.server)
+      .pipe(gulp.dest(dest + '/'));
+  //images
+  gulp.src('./public/img/*.{jpg, jpeg, png}')
+      .pipe(gulp.dest(dest + publicDir.img));
+  //views
+  console.log(appFiles.views);
+  gulp.src(appFiles.views)
+      .pipe(gulp.dest(dest + '/'));
+})
+
+gulp.task('default', ['jshint', 'clean', 'lessify', 'uglify', 'copy', 'start'])//, 'watch'])
