@@ -64,7 +64,7 @@ gulp.task('jshint', function(){
 gulp.task('start', function () {
   nodemon({
     script: 'server.js'
-  , ext: 'js html'
+  , ext: 'js html less'
   , env: { 'NODE_ENV': 'development' }
   })
 })
