@@ -38,48 +38,32 @@
     </section>
     <!-- display contents on right side....remove if on mobile -->
 
-      <pre id="fdata"> {{ formData }}</pre>
+      <pre id="fdata"> {{ formData }} </pre>
 </section>
 <!-- Location index -->
-<section class="container" ng-controller="LocationController">
+<section class="container locations" >
   <div class='row'>
-    <h2>Locations</h2>
-    <select id="location-selection" class="form-control" ng-change="!hideForm; showLocationStats()" ng-model="selection">
+    <h2 class="t-head">Locations</h2>
+    <select class="col-xs-12 col-md-4"id="location-selection" class="form-control" ng-change="!hideForm; showLocationStats(location)" ng-model="selection" placeholder="Select a Location">
       <option>Select a location</option>
       <option ng-repeat="loc in townNames track by $index" value="{{ loc }}"> {{ loc }} </option>
     </select>
     <!-- show index -->
-   <button id="show-table-index" ng-hide="hideIndexBtn"  ng-click="showTable = true" class="btn btn-default col-xs-3">Index</button>
+   <button class="btn btn-default col-xs-12 col-md-6" id="show-table-index" ng-hide="hideIndexBtn"  ng-click="showTable = true; hideIndexBtn = true; hideStats = true">Index</button>
   </div>
   <article ng-show="showTable" class="container">
     <div class="table-css table-striped">
       <div class="t-row" ng-repeat="location in locations">
-         <!-- name  -->
+        <!-- name  -->
         <div class="t-cell">{{ location.name }}</div>
-         <!-- description truncated -->
-      <!--   <div class="t-cell">{{ location.description }}</div> -->
-          <!-- TODO: show button -->
-        <div class="t-cell"> <button id="show-location"  ng-click="showTable = !showTable ; showStats = true ; showLocationStats(location)"  class="btn btn-default col-xs-2" value="{{location._id}}">Show</button></div>
-          <!-- TODO: delete button -->
-        <div class="t-cell"><button id="delete-location"  ng-click="confirmDelete(location)" value="{{location._id}}" class="btn btn-default col-xs-2 col-md-1">Delete</button></div>
+        <!-- show -->
+        <div class="t-cell"> <button id="show-location"  ng-click="showStats = true ; showLocationStats(location)"  class="btn btn-default col-xs-4" value="{{location._id}}">Show</button></div>
+        <!-- delete -->
+        <div class="t-cell"><button id="delete-location"  ng-click="confirmDelete(location)" value="{{location._id}}" class="btn btn-default col-xs-4 col-md-4">Delete</button></div>
       </div>
     </div>
   </article>
   <article ng-hide="hideStats" class="container">
-    <div class="row tabs navbar-btn">
-      <h3>{{location.selected.name}}</h3>
-      <button id="delete-" nghide="showData" ng-click="confirmDelete(location)" value="{{location._id}}" class="btn btn-default col-xs-2 col-md-1">Customers</button>
-      <button id="delete-location"  ng-show="hideData" ng-click="confirmDelete(location)" value="{{location._id}}" class="btn btn-default col-xs-2 col-md-1">Data Specs</button>
-    </div>
-    <div class="container row stats-dash">
-      <div class="row group-progress">
-        <h3 class="group-progress" id="progress-header" >Required #</h3>
-        <h5 class="group-progress" id="progress-count">{{customer.count()}}/{{location.reqNum}}</h5>
-        <div class="group-progress" id="progress-bar">
-      </div>
-      <div class="row group-options">
-        <h3 class=""
-      </div>
-    </div>
+    <location-stats></location-stats>
   </article>
 </section>

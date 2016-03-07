@@ -5,13 +5,15 @@
     <option ng-repeat="loc in townNames track by $index" value="{{ loc }}"> {{ loc }} </option>
   </select>
 
-  <section class="customer-form" id="spec-form">
+  <section class="customer-form" ng-hide="hideForm" id="spec-form">
     <div id="location-content" class="loc-content">
         <h1>{{ location.name }}</h1>
 
         <p>{{ location.description }}</p>
+        <h5>Summary</h5>
+        <p>{{ location.target }}</p>
     </div>
-    <form name="cust-form" class="col-xs-12 col-md-4" ng-hide="hideForm" ng-submit="makeCustomer()" novalidate>
+    <form name="cust-form" class="col-xs-12 col-md-4" ng-submit="makeCustomer()" novalidate>
       <div class="form-group">
         <label for="firstName">First Name</label>
         <input type="text" ng-required="true" ng-minlength="3" name="firstName" class="form-control" id="customer-first-name" placeholder="first name" ng-model="formData.firstName">
@@ -111,7 +113,7 @@
           </label>
         </div>
       </div>
-      <button type="submit" id="submit-customer" ng-disabled="formDatax.$invalid" class="btn btn-default">Submit</button>
+      <button type="submit" id="submit-customer" ng-disabled="formData.$invalid" class="btn btn-default">Submit</button>
     </form>
   <section>
 </section>
