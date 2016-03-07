@@ -33,6 +33,10 @@
   border-bottom: 1px solid black;
 }
 
+.th-cell {
+
+}
+
 .t-cell{
   display: table-cell;
 }
@@ -45,6 +49,17 @@
 
 .locations {
   clear:both;
+}
+
+.cust-table {
+  border: 1px solid black;
+  &.th-cell{
+    vertical-align: bottom;
+    font-weight: 700;
+  }
+  &.t-cell {
+    vertical-align: middle;
+  }
 }
 
 

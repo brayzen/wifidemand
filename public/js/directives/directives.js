@@ -1,4 +1,4 @@
-angular.module('LocStatistics', [])
+angular.module('Directives', [])
   .directive('locationStats', function(){
     return {
       restrict: 'AE',

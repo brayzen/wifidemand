@@ -1,2 +1,23 @@
 <!-- Customer Table -->
-<div
+<section class='table col-xs-12 cust-table'>
+  <div class='t-head cust-table'>
+    <div class='th-cell col-xs-3 col-sm-2 col-md-2'>First Name</div>
+    <div class='th-cell col-xs-3 col-sm-2 col-md-2'>Last Name</div>
+    <div class='th-cell col-xs-3 col-sm-2 col-md-2'>Street</div>
+    <div class='th-cell col-xs-3 col-sm-2 col-md-2'>City/Town</div>
+    <div class='th-cell col-xs-3 col-sm-2 col-md-2'>State</div>
+    <div class='th-cell col-xs-3 col-sm-2 col-md-2'>Option</div>
+    <div class='th-cell col-xs-3 col-sm-2 col-md-2'>Email</div>
+    <div class='t-row' ng-repeat="customer in selected.customers">
+      <div class='t-cell col-xs-3 col-sm-2 col-md-2'>{{ customer.firstName }}</div>
+      <div class='t-cell col-xs-3 col-sm-2 col-md-2'>{{ customer.lastName }}</div>
+      <div class='t-cell col-xs-3 col-sm-2 col-md-2'>{{ customer.street }}</div>
+      <div class='t-cell col-xs-3 col-sm-2 col-md-2'>{{ customer.city }}</div>
+      <div class='t-cell col-xs-3 col-sm-2 col-md-2'>{{ customer.state }}</div>
+      <div class='t-cell col-xs-3 col-sm-2 col-md-2'>{{ customer.choice }}</div>
+      <div class='t-cell col-xs-3 col-sm-2 col-md-2'>{{ customer.email }}</div>
+    <div>
+      <!-- Email button -->
+
+  </div>
+</section>

@@ -45,7 +45,6 @@
   <div class='row'>
     <h2 class="t-head">Locations</h2>
     <select class="col-xs-12 col-md-4"id="location-selection" class="form-control" ng-change="!hideForm; showLocationStats(location)" ng-model="selection" placeholder="Select a Location">
-      <option>Select a location</option>
       <option ng-repeat="loc in townNames track by $index" value="{{ loc }}"> {{ loc }} </option>
     </select>
     <!-- show index -->
@@ -63,7 +62,19 @@
       </div>
     </div>
   </article>
+  <!-- Customer/ Data Specs button with Location Name -->
+  <section>
+    <div class="row tabs">
+      <h3 class="col-xs-8 col-md-4">{{selected.name}}</h3>
+      <button class="btn btn-default col-xs-4 col-md-3" id="show-customers" ng-show="showCustomersBtn" ng-click="hideDataBtn = false; hideStats = true; showCustomersBtn = false; showCustomerTable()">Customers</button>
+      <button class="btn btn-default col-xs-4 col-md-3" id="show-customers" ng-hide="hideDataBtn" ng-click="hideDataBtn = true; hideStats = false; showCustomersBtn = true">Data Specs</button>
+    </div>
+   <section>
   <article ng-hide="hideStats" class="container">
     <location-stats></location-stats>
   </article>
+  <article ng-hide="hideCustTable" class="container">
+    <customer-table></customer-table>
+  </article>
+
 </section>

@@ -17,6 +17,8 @@ angular.module('AdminCtrl', [])
     $scope.showData = true;
     $scope.locations = [];
 
+    $scope.hideCustTable = true;
+
 
     // Default load all locations
     $http.get('/api/location/all/all')
@@ -24,6 +26,7 @@ angular.module('AdminCtrl', [])
           // console.info(data);
           $scope.locations = data;
          }).error(function(status, data){
+          $('#flash').text('Could not load all locations.  Check connection');
           console.error(status);
           console.warn(data);
          });
@@ -115,5 +118,30 @@ angular.module('AdminCtrl', [])
 
     $scope.showCustomerTable = function(){
       console.log('SHOWING TABLE');
+      $scope.hideCustTable = false;
+      $scope.showData = false;
     }
-});
+
+    // Chart.js
+    function makeChart(score) {
+      var obj = {};
+      var data = [];
+      var colorArr = ["000000", "#F7464A", "#46BFBD", "#FDB45C"]
+      var highlightArr = ["333333", "#FF5A5E", "#5AD3D1","#FFC870"]
+      Object.keys(score).forEach(element, index, function(key){
+        obj.label = key;
+        obj.color = colorArr[index];
+        obj.highlight = higlightArr[index];
+        obj.value = score[key]
+        data.push(obj);
+      })
+      console.log(obj);
+      console.log(data);
+      var pieChart = new Chart(ctx[0]).Pie(data, options);
+
+    }
+    console.log($scope.selected.score);
+    console.log($scope.selected.score);
+    console.log($scope.selected.score);
+    makeChart($scope.selected.score);
+})
