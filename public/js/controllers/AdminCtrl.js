@@ -17,7 +17,7 @@ angular.module('AdminCtrl', ['chart.js'])
       return $scope.tab === tabName;
     }
 
-    // Default load all locations
+    // Default load all locations to page
     function loadLocations() {
       if ($scope.locations.length >= 1){
         console.log('no need for a call');

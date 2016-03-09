@@ -4,7 +4,6 @@ angular.module('Directives', [])
       restrict: 'AE',
       transclude: true,
       templateUrl: "../views/templates/location-stats.html"
-      // controller: 'AdminController',
     };
   })
 
