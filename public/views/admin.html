@@ -1,38 +1,69 @@
-<section class="">
+<section class="" >
     <h1>Admin Panel</h1>
 
     <p>{{ tagline }}</p>
-    <button id="add-location" class="btn btn-default">&#43&nbsp&nbspLocation</button>
-    <section id="location-add-form">
-      <form id="customer-signup-form" name="location-form" ng-submit="makeCustomer">
-        <div class="form-group col-md-5 col-sm-5 col-xs-12">
+    <button id="add-location" ng-show="addLocBtn" ng-click="formHide = !formHide; addLocBtn = !addLocBtn" class="btn btn-default">&#43&nbsp&nbspLocation</button>
+    <section id="location-add-form" class="col-xs-12 col-sm-10 col-md-6 col-lg-6"ng-hide="formHide">
+      <form id="customer-signup-form" name="location-form" ng-submit="makeLocation()">
+        <div class="form-group">
           <label for="name">Project Name</label>
-          <input type="text" class="form-control" id="location-name" placeholder="name">
+          <input type="text" class="form-control" id="location-name" placeholder="name" ng-model="formData.name">
         </div>
-        <div class="form-group col-md-5 col-sm-5 col-xs-12">
+        <div class="form-group">
           <label for="description">Description</label>
-          <input type="text" class="form-control" id="location-description" placeholder="descibe what you can">
+          <input type="text" class="form-control" id="location-description" placeholder="descibe what you can" ng-model="formData.description">
         </div>
-        <div class="form-group col-md-5 col-sm-5 col-xs-12">
+        <div class="form-group">
           <label for="targetareas">Target Areas Impacted</label>
-          <input type="text" class="form-control" id="location-target-areas" placeholder="target areas?">
+          <input type="text" class="form-control" id="location-target-areas" placeholder="target areas?" ng-model="formData.target">
         </div>
-        <div class="form-group col-md-5 col-sm-5 col-xs-12">
+        <div class="form-group">
           <label for="summary">Summary</label>
-          <input type="text" class="form-control" id="location-summary" placeholder="detail the summary ... ">
+          <input type="text" class="form-control" id="location-summary" placeholder="detail the summary ... " ng-model="formData.summary">
         </div>
-        <div class="form-group col-md-5 col-sm-5 col-xs-12">
+        <div class="form-group">
           <label for="numberforsuccess">Number of committed required for this Area</label>
-          <input type="number" class="form-control" id="location-req-num" placeholder="100">
+          <input type="number" class="form-control" id="location-req-num" placeholder="100" ng-model="formData.reqNum">
         </div>
-        <div class="form-group col-md-5 col-sm-5 col-xs-12 option-section">
-          <label for="options">Options</label>
-          <div class="form-inline row">
-            <input type="text" class="form-control col-xs-10 col-md-5" id="location-option-1" placeholder="Option 1 - 12mbs/$49.99/mo">
-            <button id="add-option" class="btn btn-default col-xs-2 add-option">&#43</button>
+        <div class="form-group option-section">
+          <div class="form-group col-xs-6 options-div row">
+            <label for="options">Options</label>
+            <button id="add-option" ng-click="addOption()" class="form-group btn btn-default col-xs-2">&#43</button>
           </div>
+            <input type="text" name="options" class="form-control col-xs-10 col-md-5" id="location-option-1" placeholder="Option 1 - 12mbs/$49.99/mo" ng-model="formData.options.option1">
+            <input type="text" name="options" class="form-control col-xs-10 col-md-5" id="location-option-2" placeholder="Option 2 - 20mbs/$59.99/mo" ng-model="formData.options.option2">
         </div>
-        <button id="add-location-btn" class="form-group btn btn-default col-xs-2 add-option">Submit</button>
+        <button id="submit-loc-btn"  ng-click="addLocation();formHide = true;addLocBtn = true" class="form-group btn btn-default col-xs-2 add-option">Submit</button>
       </form>
     </section>
+    <!-- display contents on right side....remove if on mobile -->
+
+      <pre id="fdata"> {{ formData }} </pre>
+</section>
+<!-- Location index -->
+<section class="container locations" >
+  <div class='row'>
+    <h2 class="t-head">Locations</h2>
+    <select class="col-xs-12 col-md-4"id="location-selection" class="form-control" ng-change="!hideForm; showLocationStats(location)" ng-model="selection" placeholder="Select a Location">
+      <option>Select a location</option>
+      <option ng-repeat="loc in townNames track by $index" value="{{ loc }}"> {{ loc }} </option>
+    </select>
+    <!-- show index -->
+   <button class="btn btn-default col-xs-12 col-md-6" id="show-table-index" ng-hide="hideIndexBtn"  ng-click="showTable = true; hideIndexBtn = true; hideStats = true">Index</button>
+  </div>
+  <article ng-show="showTable" class="container">
+    <div class="table-css table-striped">
+      <div class="t-row" ng-repeat="location in locations">
+        <!-- name  -->
+        <div class="t-cell">{{ location.name }}</div>
+        <!-- show -->
+        <div class="t-cell"> <button id="show-location"  ng-click="showStats = true ; showLocationStats(location)"  class="btn btn-default col-xs-4" value="{{location._id}}">Show</button></div>
+        <!-- delete -->
+        <div class="t-cell"><button id="delete-location"  ng-click="confirmDelete(location)" value="{{location._id}}" class="btn btn-default col-xs-4 col-md-4">Delete</button></div>
+      </div>
+    </div>
+  </article>
+  <article ng-hide="hideStats" class="container">
+    <location-stats></location-stats>
+  </article>
 </section>
