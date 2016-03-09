@@ -100,4 +100,5 @@ gulp.task('copy', function() {
       .pipe(gulp.dest(dest + '/'));
 })
 
-gulp.task('default', ['jshint', 'clean', 'lessify', 'copy', 'start'])
+gulp.task('default', ['jshint', 'clean', 'lessify', 'copy', 'start']);
+gulp.task('produce', ['clean', 'lessify', 'copy', 'start'])
