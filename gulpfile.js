@@ -1,7 +1,7 @@
 var gulp = require('gulp');
 
 var clean = require('gulp-rimraf');
-var jshint = require('gulp-jshint');
+var jshint = require('gulp-jshint') || null;
 var concat = require('gulp-concat');
 var nodemon = require('gulp-nodemon');
 var livereload = require('gulp-livereload');
@@ -101,4 +101,4 @@ gulp.task('copy', function() {
 })
 
 gulp.task('default', ['jshint', 'clean', 'lessify', 'copy', 'start']);
-gulp.task('produce', ['clean', 'lessify', 'copy', 'start'])
+gulp.task('produce', ['lessify', 'copy', 'start'])
