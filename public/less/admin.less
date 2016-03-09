@@ -1,3 +1,10 @@
+.head {
+  vertical-align: middle;
+  &.t-head{
+    vertical-align: middle;
+  }
+}
+
 #submit-loc-btn {
   clear: both !important;
 }
@@ -16,7 +23,11 @@
   }
 }
 
-#fdata {
+#fdata-display {
+  border-radius: @border-radius;
+  background: #EEE;
+  min-height: 30rem;
+  max-height: 50rem;
 
 }
 
@@ -25,26 +36,78 @@
 }
 
 .t-head {
+  min-width: 125px;
+  vertical-align: bottom;
   display: table-header-group;
 }
 
 .t-row {
-  display: table-row;
+  display: table-row-group;
   border-bottom: 1px solid black;
 }
 
+
 .t-cell{
+  word-wrap: break-word;
+  min-width: 125px;
   display: table-cell;
+  border-bottom: 1px solid black;
 }
 
-.pie-chart {
-  border: 2px solid green;
-  width: 15rem;
-  height: 15rem;
+.th-cell {
+  .t-cell;
+  font-weight: 700;
+  border-bottom: 3px solid black;
 }
 
-.locations {
-  clear:both;
+.stats-dash{
+  .group-progress {
+    margin: auto;
+    text-align: center;
+    &#progress-header {
+      margin: auto;
+    }
+    &#progress-count{
+      margin-top: 1.5rem;
+    }
+    &#progress-bar {
+      margin: auto;
+      margin-top:1.5rem;
+      @media (min-width: 1239px){
+        margin-left: 2rem;
+      }
+    }
+  }
+
+  .group-options{
+    margin: auto;
+    text-align: left;
+    &.pie-chart {
+      text-align: left;
+      width: 15rem;
+      height: 15rem;
+    }
+    .options-box p {
+      min-width: 300px;
+    }
+  }
+
+  #pie-chart {
+    margin: auto;
+    width: 300px;
+  }
 }
+
+.cust-table {
+  border: 1px solid black;
+  &.th-cell{
+    vertical-align: bottom;
+    font-weight: 700;
+  }
+  &.t-cell {
+    vertical-align: middle;
+  }
+}
+
 
 

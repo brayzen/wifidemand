@@ -1,20 +1,36 @@
-<section class="form-page">
+<section class="form-page container">
   <h4>Select a location</h4>
-  <select id="location-selection" class="form-control" ng-change="!hideForm; getLocationData()" ng-model="selection">
-    <option>Select a location</option>
+  <select id="location-selection" class="form-control" ng-change=" getLocationData()" ng-model="selection1" placeholder="-- Select an option --">
     <option ng-repeat="loc in townNames track by $index" value="{{ loc }}"> {{ loc }} </option>
   </select>
 
   <section class="customer-form" ng-hide="hideForm" id="spec-form">
     <div id="location-content" class="loc-content">
-        <h1>{{ location.name }}</h1>
-
+        <h2>{{ location.name }} ::</h2>
         <p>{{ location.description }}</p>
-        <h5>Summary</h5>
+        <h4>Summary:</h4>
+        <p>{{ location.summary }}</p>
+        <h5>Target:<h5>
         <p>{{ location.target }}</p>
+        <div class="progress-summary">
+          <div class="rowe">
+            <p class="tally-percent">{{((tally / location.reqNum) * 100) + '%'}}</p>
+            <p class="tally-count">{{tally}} / {{ location.reqNum }}</p>
+          </div>
+          <div class="group-progress col-xs-12 col-md-12" id="progress-bar">
+            <div class="progress">
+              <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="{{tally}}" aria-valuemin="0" aria-valuemax="100" style="width: {{((tally / location.reqNum) * 100) + '%'}}">
+                <span class="sr-only"></span>
+              </div>
+            </div>
+          </div>
+        <p class="col-xs-12">{{location.reqNum - tally}} more people needed</p>
+        </div>
     </div>
     <form name="cust-form" class="col-xs-12 col-md-4" ng-submit="makeCustomer()" novalidate>
       <div class="form-group">
+        <hr>
+        <h3 class="form-head">Add your name to list and select your preferred option:</h3>
         <label for="firstName">First Name</label>
         <input type="text" ng-required="true" ng-minlength="3" name="firstName" class="form-control" id="customer-first-name" placeholder="first name" ng-model="formData.firstName">
         <p ng-show="cust-form.firstName.$error.minlength" class="help-block">Name is too short</p>

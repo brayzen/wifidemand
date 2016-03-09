@@ -1,0 +1,48 @@
+<section class="container col-xs-12" id="location-add-form">
+  <form class="col-md-6" id="location-signup-form" name="location-form" ng-submit="makeLocation()">
+    <div class="form-group">
+      <label for="name">Project Name</label>
+      <input type="text" class="form-control" id="location-name" placeholder="name" ng-model="formData.name">
+    </div>
+    <div class="form-group">
+      <label for="description">Description</label>
+      <input type="text" class="form-control" id="location-description" placeholder="descibe what you can" ng-model="formData.description">
+    </div>
+    <div class="form-group">
+      <label for="targetareas">Target Areas Impacted</label>
+      <input type="text" class="form-control" id="location-target-areas" placeholder="target areas?" ng-model="formData.target">
+    </div>
+    <div class="form-group">
+      <label for="summary">Summary</label>
+      <input type="text" class="form-control" id="location-summary" placeholder="detail the summary ... " ng-model="formData.summary">
+    </div>
+    <div class="form-group">
+      <label for="numberforsuccess">Number of committed required for this Area</label>
+      <input type="number" class="form-control" id="location-req-num" placeholder="100" ng-model="formData.reqNum">
+    </div>
+    <div class="form-group option-section">
+      <div class="form-group col-xs-6 options-div row">
+        <label for="options">Options</label>
+        <button id="add-option" ng-click="addOption()" class="form-group btn btn-default col-xs-2">&#43</button>
+      </div>
+        <input type="text" name="options" class="form-control col-xs-10 col-md-5" id="location-option-1" placeholder="Option 1 - 12mbs/$49.99/mo" ng-model="formData.options.option1">
+        <input type="text" name="options" class="form-control col-xs-10 col-md-5" id="location-option-2" placeholder="Option 2 - 20mbs/$59.99/mo" ng-model="formData.options.option2">
+    </div>
+  </form>
+  <div class="col-xs-12 col-sm-11 col-md-6">
+    <h5>Display: </h5>
+    <div id="fdata-display">
+      <div id="location-content" class="loc-content">
+        <h1>{{ formData.name }}</h1>
+        <p>{{ formData.description }}</p>
+        <h5>Summary</h5>
+        <p>{{ formData.summary }}</p>
+        <h5>target</h5>
+        <p>{{ formData.target }}</p>
+        <h5>Options</h5>
+        <p ng-repeat="option in formData.options">{{ option }}</p>
+    </div>
+    </pre>
+  </div>
+  <button id="submit-loc-btn"  ng-click="addLocation();formHide = true;addLocBtn = true" class="form-group btn btn-default col-xs-2 add-option">Submit</button>
+</section>

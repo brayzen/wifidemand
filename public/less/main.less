@@ -1,9 +1,22 @@
+@border-radius: 5px;
+
+
+@import "../libs/bootstrap/less/bootstrap.less";
+@import "form.less";
+@import "admin.less";
+@import "index.less";
 
 html {
   font-size: 10px;
+  overflow: hidden;
+  height: 100%
 }
 
-@import "index.less";
-@import "form.less";
-@import "admin.less";
-@import "../libs/bootstrap/less/bootstrap.less";
+body {
+  overflow: auto;
+  height: 100%;
+}
+
+.modal-open {
+  overflow: auto;
+}
