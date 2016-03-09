@@ -15,3 +15,11 @@ angular.module('Directives', [])
       templateUrl: "../views/templates/customer-table.html"
     }
   })
+
+  .directive('addLocation', function(){
+    return {
+      restrict: 'E',
+      transclude: false,
+      templateUrl: "../views/templates/add-location.html"
+    }
+  })

@@ -21,7 +21,7 @@ router.route('/:location/all')
     var location = req.params.location
     console.log(location + ' WEEEEEEEEEEEEEEE');
 
-    Customer.find({locRef: location}, function(err, result){
+    Customer.find({locRef: location}, function(err, result) {
       if (err) {
           console.log(err);
           res.json({error: err});
@@ -31,5 +31,20 @@ router.route('/:location/all')
       res.json(result);
     })
   })
+
+router.route('/tally/:location')
+      .get( function(req, res) {
+        console.log("requst for customer tally")
+        var name = req.params.location;
+        Customer.find({locRef: name}, function(err, result) {
+          if (err) {
+            console.log(err);
+            res.json({message: err});
+          } else {
+            console.log('Success here is the tally of all the customer for ' + name + ': ' + result.length);
+            res.json(result.length);
+          }
+        })
+      })
 
 module.exports = router;

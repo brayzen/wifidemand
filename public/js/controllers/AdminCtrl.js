@@ -1,42 +1,48 @@
-angular.module('AdminCtrl', [])
+angular.module('AdminCtrl', ['chart.js'])
   .controller('AdminController', function($scope, $http) {
     var counter = 2;
+    $scope.locations = [];
+    $scope.needShow = true;
     $scope.formData = {};
     $scope.formData.options = {};
-    $scope.formHide = true;
-    $scope.addLocBtn = true;
-    $scope.tagline = 'Nothing beats a pocket protector!';
-    $scope.showTable = true;
+    $scope.emailList = []
 
-    $scope.hideStats = true;
-    $scope.hideIndexBtn = true;
+    $scope.tab = 1;
 
-    $scope.showCustomersBtn = true;
-    $scope.hideDataBtn = true;
+    $scope.setTab = function(newValue){
+      $scope.tab = newValue;
+    }
 
-    $scope.showData = true;
-    $scope.locations = [];
-
-    $scope.hideCustTable = true;
-
+    $scope.isSet = function(tabName){
+      return $scope.tab === tabName;
+    }
 
     // Default load all locations
-    $http.get('/api/location/all/all')
-         .success(function(data){
-          // console.info(data);
-          $scope.locations = data;
-         }).error(function(status, data){
-          $('#flash').text('Could not load all locations.  Check connection');
-          console.error(status);
-          console.warn(data);
-         });
+    function loadLocations() {
+      if ($scope.locations.length >= 1){
+        console.log('no need for a call');
+      } else {
+        $http.get('/api/location/all/all')
+             .success(function(data){
+              // console.info(data);
+              $scope.locations = data;
+             }).error(function(status, data){
+              $('#flash').text('Could not load all locations.  Check connection');
+              console.error(status);
+              console.warn(data);
+             });
+      }
+    }
+    loadLocations();
 
     // + button for options - adding an option
     $scope.addOption = function(){
       counter++;
       $scope.formData.options["option" + counter] = '';
+      console.warn($scope.formData.options);
       $('.option-section').append('<input type="text" name="options" class="form-control col-xs-11 col-md-12 ng-pristine ng-untouched ng-valid ng-empty"' +
-                                  ' id="location-option-' + counter + '" placeholder="Option ' + counter + ' - etc." ng-model="formData.options.option'+ counter +'">');
+                                  ' id="location-option-' + counter + '" placeholder="Option ' + counter + ' - etc." ng-model="formData.options.option' + counter + '">');
+      console.info($('#location-content').append('<p> {{ formData.options.option' + counter + ' }} </p>'));
     };
 
     $scope.addLocation = function() {
@@ -48,20 +54,17 @@ angular.module('AdminCtrl', [])
             $scope.formHide = true;
             $scope.addLocBtn = true;
             $scope.formData = {};
+            $scope.locations.push($scope.formData)
            }).error(function(status, data){
             console.error(status);
             console.error(data);
            });
     };
 
-
-
     $scope.showLocationStats = function(location){
       $scope.selected = location;
-      console.info($scope.selected);
-      $scope.hideStats = false;
-      $scope.showTable = false;
-      $scope.hideIndexBtn = false;
+      $scope.setTab(3);
+      $scope.needShow = false;
       getCustomers(location);
     };
 
@@ -81,13 +84,12 @@ angular.module('AdminCtrl', [])
     };
 
     function getCustomers(location) {
-      console.log('getting all customers');
+      console.log('getting all customers for ' + location.name );
       var locationName = location.name;
 
       $http.get('/api/customer/' + locationName + '/all')
            .success(function(data){
             console.log("success: " + data);
-            console.info(data);
             tallyOptions(data);
             $scope.selected.customers = data;
            }).error(function(data, status){
@@ -113,7 +115,7 @@ angular.module('AdminCtrl', [])
       });
       $scope.selected.tally = tally;
       $scope.selected.score = score;
-      console.log($scope.selected.score);
+      makeChart($scope.selected.score);
     }
 
     $scope.showCustomerTable = function(){
@@ -124,24 +126,28 @@ angular.module('AdminCtrl', [])
 
     // Chart.js
     function makeChart(score) {
-      var obj = {};
       var data = [];
-      var colorArr = ["000000", "#F7464A", "#46BFBD", "#FDB45C"]
-      var highlightArr = ["333333", "#FF5A5E", "#5AD3D1","#FFC870"]
-      Object.keys(score).forEach(element, index, function(key){
-        obj.label = key;
-        obj.color = colorArr[index];
-        obj.highlight = higlightArr[index];
-        obj.value = score[key]
-        data.push(obj);
-      })
-      console.log(obj);
-      console.log(data);
-      var pieChart = new Chart(ctx[0]).Pie(data, options);
-
+      var labels = [];
+      Object.keys(score).forEach(function(key, index){
+        data.push(score[key]);
+        labels.push('Option-' + key);
+      });
+      $scope.labels = labels;
+      $scope.data = data;
     }
-    console.log($scope.selected.score);
-    console.log($scope.selected.score);
-    console.log($scope.selected.score);
-    makeChart($scope.selected.score);
+
+    // Copy format
+    $scope.copyCSEmails = function(customers) {
+      emailString = '';
+      $scope.selected.customers.forEach(function(customer, index){
+        if (index % 5 === 0){
+          emailString += '\n' + customer.email;
+        } else if (customers[index + 1] === undefined){
+          emailString += customer.email;
+        } else {
+          emailString += customer.email + ', ';
+        }
+      });
+      $scope.selected.emails = emailString;
+    }
 })
