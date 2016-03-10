@@ -17,8 +17,8 @@ for (var i = 1; i < 500; i++){
       state: Faker.address.state(),
       zip: Faker.address.zipCode(),
       phone: Faker.phone.phoneNumber(),
-      choice: Math.ceil(Math.random() * 3)
-      createdAt: Date.now();
+      choice: Math.ceil(Math.random() * 3),
+      createdAt: Date.now()
     });
 }
 
