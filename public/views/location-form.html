@@ -4,7 +4,7 @@
     <option ng-repeat="loc in townNames track by $index" value="{{ loc }}"> {{ loc }} </option>
   </select>
 
-  <section class="customer-form" ng-hide="hideForm" id="spec-form">
+  <section class="customer-form" ng-hide="hidePage" id="spec-form">
     <div id="location-content" class="loc-content">
         <h2>{{ location.name }} ::</h2>
         <p>{{ location.description }}</p>
@@ -27,7 +27,7 @@
         <p class="col-xs-12">{{location.reqNum - tally}} more people needed</p>
         </div>
     </div>
-    <form name="customerForm" class="col-xs-12 col-md-4" ng-submit novalidate>
+    <form name="customerForm" ng-hide="hideForm" class="col-xs-12 col-md-4" ng-submit novalidate>
       <div class="form-group">
         <hr>
         <h3 class="form-head">Add your name to list and select your preferred option:</h3>
@@ -132,5 +132,9 @@
       </div>
       <button type="submit" ng-click="makeCustomer()" id="submit-customer" ng-disabled="customerForm.$invalid" class="btn btn-default">Submit</button>
     </form>
-  <section>
+  </section>
+  <section class="container" ng-show="showSuccess">
+    <h2>Thank you for submittal.  Check your email inbox, We'll be in touch.</h2>
+  </section>
 </section>
+</div>

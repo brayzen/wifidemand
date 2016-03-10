@@ -37,7 +37,7 @@ router.route('/')
     var reqName = reqData.name;
     new Locnames({name: reqName}).save(function(err, result){
       if (err)
-        return res.json({error: err});
+        res.json({error: err});
       });
     new Location(reqData).save(function(err, result){
       if (err) {

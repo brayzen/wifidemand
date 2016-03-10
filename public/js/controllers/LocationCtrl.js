@@ -1,8 +1,11 @@
 angular.module('LocationCtrl', [])
        .controller('LocationController', ['$scope', '$http', function($scope, $http) {
     $scope.formData = {};
+    $scope.hidePage = true;
     $scope.hideForm = true;
     $scope.locationName = {};
+    $scope.showSuccess = false;
+
 
     //Populate selection box with location names\
     $http.get('/api/location/get/names')
@@ -26,6 +29,7 @@ angular.module('LocationCtrl', [])
             var newData = data["0"];
             console.log(newData);
             $scope.location = newData;
+            $scope.hidePage = false;
             $scope.hideForm = false;
             getCustomerTally(newData);
           }).error(function(status, data){
@@ -42,10 +46,9 @@ angular.module('LocationCtrl', [])
       $http.post('/api/customer', formData)
            .success(function(data){
             console.log(data);
-            console.info("disply success on screen");
-            $scope.formHide = true;
-            $scope.addLocBtn = true;
+            $scope.tally++
             $scope.formData = {};
+            $scope.hideForm = true;
             $scope.showSuccess = true;
            }).error(function(status, data){
             console.error(status);
@@ -54,8 +57,8 @@ angular.module('LocationCtrl', [])
     };
 
     function getCustomerTally(location) {
-      var location = location.name;
-      $http.get('/api/customer/tally/'+ location)
+      var name = location.name;
+      $http.get('/api/customer/tally/'+ name)
            .then(function(res){
             console.info('Successful call: tally = ' + res.data);
             $scope.tally = res.data;

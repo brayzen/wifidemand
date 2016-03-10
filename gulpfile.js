@@ -24,6 +24,7 @@ var publicDir = {
 }
 
 process.env.NODE_ENV = 'development';
+process.env.PORT = 4000;
 //Vendor path var
 var bowerDir = curr + '/public/libs/';
 
@@ -70,9 +71,8 @@ gulp.task('start', function () {
 })
 
 gulp.task('watch', function() {
-  gulp.watch('./public/less/*.less', ['lessify', 'start']);
-  gulp.watch('./public/js/**', ['jshint', 'start']);
-  // gulp.watch('./public/**', ['watch', 'start']);
+  gulp.watch('./public/less/*.less', ['lessify', 'start'])
+  gulp.watch('./public/js/**', ['jshint']);
 });
 
 gulp.task('concat', function() {
@@ -82,24 +82,6 @@ gulp.task('concat', function() {
     .pipe(gulp.dest('./dist/public/js/'));
 });
 
-// gulp.task('uglify', function(){
-//   gulp.src(appFiles.combinedjs)
-//     .pipe(uglify())
-//     .pipe(gulp.dest('./dist/public/js/'));
-// });
 
-gulp.task('copy', function() {
-  //server.js
-  gulp.src(appFiles.server)
-      .pipe(gulp.dest(dest + '/'));
-  //images
-  // gulp.src('./public/img/*.{jpg, jpeg, png}')
-  //     .pipe(gulp.dest(dest + publicDir.img));
-  //views
-  console.log(appFiles.views);
-  gulp.src(appFiles.views)
-      .pipe(gulp.dest(dest + '/'));
-})
-
-gulp.task('default', ['jshint', 'clean', 'lessify', 'copy', 'start', 'watch']);
-gulp.task('produce', ['lessify', 'copy', 'start'])
+gulp.task('default', ['jshint', 'clean', 'lessify','start', 'watch']);
+gulp.task('produce', ['lessify', 'start'])

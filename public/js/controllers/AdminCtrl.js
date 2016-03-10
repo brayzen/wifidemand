@@ -22,9 +22,10 @@ angular.module('AdminCtrl', ['chart.js'])
       if ($scope.locations.length >= 1){
         console.log('no need for a call');
       } else {
+        console.log('making a call to load locations');
         $http.get('/api/location/all/all')
              .success(function(data){
-              // console.info(data);
+              console.info(data);
               $scope.locations = data;
              }).error(function(status, data){
               $('#flash').text('Could not load all locations.  Check connection');
@@ -38,11 +39,14 @@ angular.module('AdminCtrl', ['chart.js'])
     // + button for options - adding an option
     $scope.addOption = function(){
       counter++;
-      $scope.formData.options["option" + counter] = '';
+      $scope.formData.options["option" + counter] = 'default text';
       console.warn($scope.formData.options);
       $('.option-section').append('<input type="text" name="options" class="form-control col-xs-11 col-md-12 ng-pristine ng-untouched ng-valid ng-empty"' +
-                                  ' id="location-option-' + counter + '" placeholder="Option ' + counter + ' - etc." ng-model="formData.options.option' + counter + '">');
-      console.info($('#location-content').append('<p> {{ formData.options.option' + counter + ' }} </p>'));
+                                  ' id="location-option-' + counter + '" placeholder="Option ' + counter + ' - etc." ng-model="formData.options.option' + counter + '"' +
+                                  ' ng-bind="formData.options.option' + counter + '">');
+      console.info('<input type="text" name="options" class="form-control col-xs-11 col-md-12 ng-pristine ng-untouched ng-valid ng-empty"' +
+                                  ' id="location-option-' + counter + '" placeholder="Option ' + counter + ' - etc." ng-model="formData.options.option' + counter + '"' +
+                                  ' ng-bind="formData.options.option' + counter + '">')
     };
 
     $scope.addLocation = function() {
