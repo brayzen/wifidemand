@@ -1,77 +1,50 @@
 var express = require('express');
 var router = express.Router();
-var db = require('../models/customer');
+var Customer = require('../models/customer');
 
 router.route('/')
   .post( function(req, res) {
     console.log("made a POST request to make a CUSTOMER");
-    console.log(req.body);
     var reqbody = req.body;
-    db.insert({reqbody}, function(err, result) {
+
+    new Customer(reqbody).save(function(err, result) {
       if (err)
           res.send(err);
-      console.log(result);
+      console.log({"SUCCESS": result});
       res.json(result); // return all nerds in JSON format
     });
+  });
+
+//All customers in specific location
+router.route('/:location/all')
+  .get( function(req, res) {
+    var location = req.params.location
+    console.log(location + ' WEEEEEEEEEEEEEEE');
+
+    Customer.find({locRef: location}, function(err, result) {
+      if (err) {
+          console.log(err);
+          res.json({error: err});
+      }
+      console.log('Success here are all the customer for ' + location + ':');
+      console.log(result);
+      res.json(result);
+    })
   })
-  //   } else {
-  //     console.log("made a request to location");
-  //     var locationName = req.params.name;
-  //     loc.find({name: locationName}, function(err, result) {
-  //       if (err)
-  //           res.send(err);
-  //       console.log(result);
-  //       res.json(result); // return all nerds in JSON format
-  //     });
-  //   }
-  // })
 
+router.route('/tally/:location')
+      .get( function(req, res) {
+        console.log("requst for customer tally")
+        var name = req.params.location;
+        Customer.find({locRef: name}, function(err, result) {
+          if (err) {
+            console.log(err);
+            res.json({message: err});
+          } else {
+            console.log('Success here is the tally of all the customer for ' + name + ': ' + result.length);
+            res.json(result.length);
+          }
+        })
+      })
 
-    module.exports = function(app) {
-
-        // server routes ===========================================================
-        // handle things like api calls
-        // authentication routes
-
-        // sample api route
-        app.get('/customers', function(req, res) {
-            // use mongoose to get all nerds in the database
-            console.log("made a request to customers...for names");
-            var customerObj = req.body;
-            db.customers.find(function(err, customerObj) {
-
-                // if there is an error retrieving, send the error.
-                                // nothing after res.send(err) will execute
-                if (err)
-                    res.send(err);
-
-                res.json(customerObj); // return all nerds in JSON format
-            });
-        });
-
-        app.get('/customer/:id', function(req, res) {
-            // use mongoose to get all nerds in the database
-            console.log("made a request to customer");
-            var custationName = req.body;
-            db.customers.find(function(err, customerObj) {
-
-                // if there is an error retrieving, send the error.
-                                // nothing after res.send(err) will execute
-                if (err)
-                    res.send(err);
-
-                res.json(customerObj); // return all nerds in JSON format
-            });
-        });
-
-
-        // route to handle creating goes here (app.post)
-        // route to handle delete goes here (app.delete)
-
-        // frontend routes =========================================================
-        // route to handle all angular requests
-        app.get('*', function(req, res) {
-            res.sendfile('./public/views/index.html'); // load our public/index.html file
-        });
-
-    };
+module.exports = router;

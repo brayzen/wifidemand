@@ -1,3 +1,3 @@
-angular.module('sampleApp', ['ngRoute', 'appRoutes', 'MainCtrl', 'AdminCtrl',
-                             'AdminService', 'LocationCtrl', 'LocationService',
-                             'CustomerCtrl', 'CustomerService']);
+angular.module('sampleApp', ['ngRoute', 'appRoutes', 'MainCtrl', 'Directives',
+                             'AdminCtrl', 'AdminService', 'LocationCtrl',
+                             'LocationService', 'CustomerCtrl', 'CustomerService']);

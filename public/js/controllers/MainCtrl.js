@@ -1,5 +1,3 @@
-angular.module('MainCtrl', []).controller('MainController', function($scope, LocationFactory) {
-    // localStorage.locations = LocationFactory.get();
+angular.module('MainCtrl', []).controller('MainController', function($scope) {
     $scope.tagline = 'To the moon and back!';
-
 });

@@ -1,7 +1,7 @@
 var gulp = require('gulp');
 
 var clean = require('gulp-rimraf');
-var jshint = require('gulp-jshint');
+var jshint = require('gulp-jshint') || null;
 var concat = require('gulp-concat');
 var nodemon = require('gulp-nodemon');
 var livereload = require('gulp-livereload');
@@ -64,7 +64,7 @@ gulp.task('jshint', function(){
 gulp.task('start', function () {
   nodemon({
     script: 'server.js'
-  , ext: 'js html'
+  , ext: 'js html less'
   , env: { 'NODE_ENV': 'development' }
   })
 })
@@ -100,4 +100,5 @@ gulp.task('copy', function() {
       .pipe(gulp.dest(dest + '/'));
 })
 
-gulp.task('default', ['jshint', 'clean', 'lessify', 'copy', 'start'])//, 'watch'])
+gulp.task('default', ['jshint', 'clean', 'lessify', 'copy', 'start']);
+gulp.task('produce', ['lessify', 'copy', 'start'])

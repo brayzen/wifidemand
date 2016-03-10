@@ -1,6 +1,4 @@
-var app = angular.module('CustomerCtrl', []);
-
-app.controller('CustomerController', function($http, $scope) {
-
-});
+angular.module('CustomerCtrl', [])
+  .controller('CustomerController', function($http, $scope) {
+  });
 

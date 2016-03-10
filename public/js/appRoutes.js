@@ -8,7 +8,6 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', f
             controller: 'MainController'
         })
 
-        // nerds page that will use the NerdController
         .when('/admin', {
             templateUrl: 'views/admin.html',
             controller: 'AdminController'
@@ -17,7 +16,7 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', f
         .when('/locations', {
             templateUrl: 'views/location-form.html',
             controller: 'LocationController'
-        });
+        })
 
     // $locationProvider.html5Mode(true);
 
