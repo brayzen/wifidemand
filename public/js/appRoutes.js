@@ -16,7 +16,7 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', f
         .when('/locations', {
             templateUrl: 'views/location-form.html',
             controller: 'LocationController'
-        })
+        });
 
     // $locationProvider.html5Mode(true);
 

@@ -1,10 +1,10 @@
 var gulp = require('gulp');
-
 var clean = require('gulp-rimraf');
 var jshint = require('gulp-jshint') || null;
 var concat = require('gulp-concat');
 var nodemon = require('gulp-nodemon');
-var livereload = require('gulp-livereload');
+// var livereload = require('gulp-livereload');
+var watch = require('gulp-watch');
 var minifyCss = require('gulp-minify-css');
 var uglify = require('gulp-uglify');
 var lessify = require('gulp-less');
@@ -23,6 +23,7 @@ var publicDir = {
   views: '/public/views/'
 }
 
+process.env.NODE_ENV = 'development';
 //Vendor path var
 var bowerDir = curr + '/public/libs/';
 
@@ -64,15 +65,15 @@ gulp.task('jshint', function(){
 gulp.task('start', function () {
   nodemon({
     script: 'server.js'
-  , ext: 'js html less'
   , env: { 'NODE_ENV': 'development' }
   })
 })
 
-// gulp.task('watch', function() {
-//   livereload.listen();
-//   gulp.watch('./public/**', ['default']);
-// });
+gulp.task('watch', function() {
+  gulp.watch('./public/less/*.less', ['lessify', 'start']);
+  gulp.watch('./public/js/**', ['jshint', 'start']);
+  // gulp.watch('./public/**', ['watch', 'start']);
+});
 
 gulp.task('concat', function() {
   gulp.src(appFiles.combinedjs)// + ',' + appFiles.vendor)
@@ -100,5 +101,5 @@ gulp.task('copy', function() {
       .pipe(gulp.dest(dest + '/'));
 })
 
-gulp.task('default', ['jshint', 'clean', 'lessify', 'copy', 'start']);
+gulp.task('default', ['jshint', 'clean', 'lessify', 'copy', 'start', 'watch']);
 gulp.task('produce', ['lessify', 'copy', 'start'])

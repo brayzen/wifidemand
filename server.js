@@ -13,10 +13,10 @@ var customer = require('./app/routes/customerRoutes');
 console.log(process.env.mode + ' :::: Environment');
 // config files
 var db = require('./config/db');
-console.log(db.url + ' ::: db URL')
+console.log(db.url + ' ::: db URL');
 
 // set our port
-var port = process.env.PORT || 4080;
+var port = process.env.PORT || 4000;
 
 // connect to our mongoDB database
 // (uncomment after you enter in your own credentials in config/db.js)

@@ -12,8 +12,6 @@ angular.module('LocationCtrl', [])
                 arr.push(location.name);
             });
             $scope.townNames = arr;
-            console.log($scope.townNames);
-            // timeSetter();
         }).error(function(status, data){
             console.log(status);
             console.log(data);
@@ -30,7 +28,6 @@ angular.module('LocationCtrl', [])
             $scope.location = newData;
             $scope.hideForm = false;
             getCustomerTally(newData);
-            console.warn($scope.tally);
           }).error(function(status, data){
             console.error(data, status);
           });
@@ -49,6 +46,7 @@ angular.module('LocationCtrl', [])
             $scope.formHide = true;
             $scope.addLocBtn = true;
             $scope.formData = {};
+            $scope.showSuccess = true;
            }).error(function(status, data){
             console.error(status);
             console.error(data);

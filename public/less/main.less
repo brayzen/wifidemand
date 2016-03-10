@@ -1,10 +1,9 @@
-@border-radius: 5px;
-
-
 @import "../libs/bootstrap/less/bootstrap.less";
 @import "form.less";
 @import "admin.less";
 @import "index.less";
+
+@border-radius: 5px;
 
 html {
   font-size: 10px;
@@ -20,3 +19,12 @@ body {
 .modal-open {
   overflow: auto;
 }
+
+.progress {
+  &.back-container{
+    @media (min-width: 1240px){
+      margin-left: 16%;
+    }
+  }
+}
+
