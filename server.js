@@ -10,7 +10,7 @@ var location = require('./app/routes/locationRoutes');
 var customer = require('./app/routes/customerRoutes');
 
 // configuration ===========================================
-
+console.log(process.env.mode + ' :::: Environment');
 // config files
 var db = require('./config/db');
 
