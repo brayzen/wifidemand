@@ -10,24 +10,28 @@
 // }
 
 .jumbotron {
-  background-image:url('http://www.neyralaw.com/wp-content/uploads/2012/07/tokyo-blue-background-4547.jpg');
+  background-image:url('http://res.cloudinary.com/www-virgin-com/virgin-com-prod/sites/virgin.com/files/Articles/Entrepreneur%20Getty/Coffee_shop_laptop_getty_0.jpg');
   background-size:cover;
   height:500px;
-  opacity: .9;
+  background-color: gray;
+  // opacity: .8;
   border-radius: 0 !important;
   // position: relative;
   // top: 0;
   // margin-top: 0;
   color: #fff !important;
   // padding-top: 250px !important;
+  font-family: 'Istok Web', 'Helvetica Neue', sans-serif;
 }
 
 .jumbo-header {
-  font-weight: 700;
+  // font-size: 44px;
+  font-weight: 800;
   text-transform: uppercase;
 }
 
 .jumbo-sub-header {
+  font-weight: bold !important;
   margin-bottom: 25px;
 }
 
@@ -37,30 +41,53 @@
   display: table;
   position: relative;
 }
+
 .va-middle {
   vertical-align: middle !important;
   display: table-cell;
 }
 
+.btn-home-mobile {
+  width: 100%;
+}
+
 .btn-jumbo, .btn-jumbo:link, .btn-jumbo:visited {
-    background-color: rgba(255,255,255,.3) !important;
-    border-radius: 2px !important;
-    color: #fff !important;
-    border: 0px solid rgba(255,255,255,.3) !important;
-    font-weight: bold;
-    text-shadow: 0 1px 0 black;
+  background-color: rgba(52, 152, 219,1.0) !important;
+  border-radius: 2px !important;
+  color: #fff !important;
+  border-color: rgba(52, 152, 219,1.0) !important;
+  font-weight: bold;
+  text-shadow: 0 1px 0 black;
+  border-bottom-color: rgba(41, 128, 185,1.0);
 }
 
 .btn-jumbo:active, .btn-jumbo:hover {
-    background-color: rgba(0,0,0,.3) !important;
-    color: #fff!important;
-    border: 0px solid rgba(0,0,0,.3) !important;
-    font-weight: bold;
+  background-color: rgba(41, 128, 185,1.0) !important;
+  color: #fff !important;
+  border-color: rgba(41, 128, 185,1.0) !important;
+  border-bottom-color: rgba(41, 128, 185,1.0);
+  font-weight: bold;
 }
 
-// .hero-text {
-//   // position: relative;
-//   // bottom: 100px;
-//   // left: 40px;
-//   color: #fff !important;
-// }
+.module-container {
+  background-color: #fff;
+  max-width: 695px;
+  margin-bottom: 30px;
+}
+
+.module-img {
+  padding-left: 0 !important;
+  padding-right: 0 !important;;
+}
+
+.module-text {
+  // padding: 15px;
+  // font-weight: bold;
+  vertical-align: middle !important;
+  // font-size: 20px;
+  padding: 30px 15px 30px 15px !important;
+  h4 {
+    // text-transform: uppercase !important;
+    font-weight: bold;
+  }
+}
