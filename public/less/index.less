@@ -1,27 +1,54 @@
-// .background {
-//   background: url(../img/moutain-lake.jpg) no-repeat center center fixed;
-// }
-//
-// .btn-class {
-//   border: 2px solid @main-border-color;
-//   .btn {
-//     background: @main-button-color;
-//   }
-// }
+
+video#background {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  // z-index: -100;
+  // height: auto;
+  width: auto;
+  min-width: 100%;
+  min-height: 100%;
+  // width: 100%;
+  height: 500px;
+  -webkit-transform: scaleX(2);
+  -moz-transform: scaleX(2);
+  background: url('http://res.cloudinary.com/www-virgin-com/virgin-com-prod/sites/virgin.com/files/Articles/Entrepreneur%20Getty/Coffee_shop_laptop_getty_0.jpg') no-repeat;
+  background-size: cover;
+}
+
+video {
+  z-index: -100;
+}
+
+@media (max-width: 990px) {
+    .jumbotron {
+      background-image:url('http://res.cloudinary.com/www-virgin-com/virgin-com-prod/sites/virgin.com/files/Articles/Entrepreneur%20Getty/Coffee_shop_laptop_getty_0.jpg');
+      background-size:cover;
+    }
+    video#background {
+        display: none;
+    }
+}
 
 .jumbotron {
-  background-image:url('http://res.cloudinary.com/www-virgin-com/virgin-com-prod/sites/virgin.com/files/Articles/Entrepreneur%20Getty/Coffee_shop_laptop_getty_0.jpg');
-  background-size:cover;
-  height:500px;
-  background-color: gray;
+  // background-image:url('http://res.cloudinary.com/www-virgin-com/virgin-com-prod/sites/virgin.com/files/Articles/Entrepreneur%20Getty/Coffee_shop_laptop_getty_0.jpg');
+  // background-size:cover;
+  height:600px;
+  // background-color: gray;
   // opacity: .8;
   border-radius: 0 !important;
-  // position: relative;
-  // top: 0;
+  position: absolute;
+  top: -50px;
   // margin-top: 0;
   color: #fff !important;
   // padding-top: 250px !important;
   font-family: 'Istok Web', 'Helvetica Neue', sans-serif;
+  position: relative;
+  z-index: 101;
+  margin-bottom: -50px;
 }
 
 .jumbo-header {
@@ -40,6 +67,7 @@
   width: 100%;
   display: table;
   position: relative;
+  z-index: 255;
 }
 
 .va-middle {
@@ -56,6 +84,7 @@
   background-color: rgba(52, 152, 219,1.0) !important;
   border-color: rgba(52, 152, 219,1.0) !important;
   border-bottom-color: rgba(41, 128, 185,1.0);
+  z-index: 100000;
 }
 
 .btn-home-mobile:active, .btn-home-mobile:hover {
@@ -64,9 +93,11 @@
   border-color: rgba(41, 128, 185,1.0) !important;
   border-bottom-color: rgba(41, 128, 185,1.0);
   font-weight: bold;
+  z-index: 100000;
 }
 
 .btn-home-desktop, .btn-home-desktop:link, .btn-home-desktop:visited {
+  z-index: 100000;
   border-radius: 2px !important;
   color: #fff !important;
   font-weight: bold;
@@ -78,6 +109,7 @@
 }
 
 .btn-home-desktop:active, .btn-home-desktop:hover {
+  z-index: 100000;
   color: #fff !important;
   background-color: rgba(0,0,0,0.35) !important;
   // border-color: rgba(0,0,0,0.35) !important;
@@ -88,7 +120,8 @@
 .module-container {
   background-color: #fff;
   max-width: 695px;
-  margin-bottom: 30px;
+  margin: 40px auto;
+  // margin-bottom: 30px;
 }
 
 .module-img {
@@ -108,7 +141,7 @@
   }
 }
 
-.navbar {
-  margin-bottom: 0;
-  border-radius: 0;
-}
+// .navbar {
+//   margin-bottom: 0;
+//   border-radius: 0;
+// }
