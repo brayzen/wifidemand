@@ -1,11 +1,12 @@
 angular.module('AdminCtrl', ['chart.js'])
   .controller('AdminController', function($scope, $http) {
-    var counter = 2;
+    var counter = 1;
     $scope.locations = [];
     $scope.needShow = true;
     $scope.formData = {};
-    $scope.formData.options = {};
-    $scope.emailList = []
+    $scope.formData.options = [];
+    $scope.optionsToAdd = [{}];
+    $scope.emailList = [];
 
     $scope.tab = 1;
 
@@ -36,21 +37,36 @@ angular.module('AdminCtrl', ['chart.js'])
     }
     loadLocations();
 
+
+    $scope.add =function(addOption){
+      counter++
+      $scope.formData.options.push(angular.copy(addOption))
+      $scope.optionToAdd = '';
+      console.log($scope.optionToAdd);
+      $('#option-input').val('').attr('placeholder', 'Option-' + counter).focus();
+    }
+
+    $scope.clearOptions = function(){
+      if (confirm("Are you sure you want to clear all options?")) {
+        counter = 1;
+        $('#option-input').val('').attr('placeholder', 'Option-' + counter).focus();
+        $scope.formData.options = [];
+      };
+    }
     // + button for options - adding an option
-    $scope.addOption = function(){
-      counter++;
-      $scope.formData.options["option" + counter] = 'default text';
-      console.warn($scope.formData.options);
-      $('.option-section').append('<input type="text" name="options" class="form-control col-xs-11 col-md-12 ng-pristine ng-untouched ng-valid ng-empty"' +
-                                  ' id="location-option-' + counter + '" placeholder="Option ' + counter + ' - etc." ng-model="formData.options.option' + counter + '"' +
-                                  ' ng-bind="formData.options.option' + counter + '">');
-      console.info('<input type="text" name="options" class="form-control col-xs-11 col-md-12 ng-pristine ng-untouched ng-valid ng-empty"' +
-                                  ' id="location-option-' + counter + '" placeholder="Option ' + counter + ' - etc." ng-model="formData.options.option' + counter + '"' +
-                                  ' ng-bind="formData.options.option' + counter + '">')
-    };
+    // $scope.addOption = function(){
+    //   counter++;
+    //   $('.option-section').append('<input type="text" name="options" class="form-control col-xs-11 col-md-12 ng-pristine ng-untouched ng-valid ng-empty"' +
+    //                               ' id="location-option-' + counter + '" placeholder="Option ' + counter + ' - etc." ng-model="formData.options.option' + counter + '">');
+    //   $scope.$watch(function(){
+    //     $scope.formData.options["option" + counter];
+    //   })
+    //   $('#location-content').append('<p ng-binding="formData.options.option' + counter + '"></p>')
+    // };
 
     $scope.addLocation = function() {
       console.log('submitting');
+      console.info($scope.formData);
       $http.post('/api/location', $scope.formData)
            .success(function(data){
             console.log(data);

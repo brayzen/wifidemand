@@ -7,9 +7,10 @@ angular.module('LocationCtrl', [])
     $scope.showSuccess = false;
 
 
-    //Populate selection box with location names\
+    //Populate selection box with location names
     $http.get('/api/location/get/names')
         .success(function(data){
+            console.log(data);
             var arr = [];
             data.forEach(function(location){
                 arr.push(location.name);
