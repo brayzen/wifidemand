@@ -24,7 +24,7 @@ var publicDir = {
 }
 
 process.env.NODE_ENV = 'development';
-process.env.PORT = 4000;
+process.env.PORT = 5000;
 //Vendor path var
 var bowerDir = curr + '/public/libs/';
 

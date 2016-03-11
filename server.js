@@ -10,17 +10,16 @@ var location = require('./app/routes/locationRoutes');
 var customer = require('./app/routes/customerRoutes');
 
 // configuration ===========================================
-console.log(process.env.mode + ' :::: Environment');
+console.log(process.env.NODE_ENV + ' :::: Environment');
 // config files
 var db = require('./config/db');
-console.log(db.url + ' ::: db URL');
 
 // set our port
 var port = process.env.PORT || 4000;
 
 // connect to our mongoDB database
 // (uncomment after you enter in your own credentials in config/db.js)
-// mongoose.connect(db.url);
+mongoose.connect(db.url);
 
 // get all data/stuff of the body (POST) parameters
 // parse application/json
@@ -39,9 +38,6 @@ app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(express.static(__dirname + '/public'));
 
 // routes ==================================================
-// require('./app/routes')(app); // configure our routes
-// require('./app/routes/customerRoutes')(app);
-// require('./app/routes/locationRoutes')(app);
 app.use('/api/location', location);
 app.use('/api/customer', customer);
 app.get('/', function(req, res) {
@@ -49,7 +45,7 @@ app.get('/', function(req, res) {
 });
 
 // start app ===============================================
-// startup our app at http://localhost:4080
+// startup our app at http://localhost:5000  set in the gulpfile
 app.listen(port);
 
 // shoutout to the user
