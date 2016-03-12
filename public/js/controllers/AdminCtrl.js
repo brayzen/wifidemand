@@ -75,6 +75,7 @@ angular.module('AdminCtrl', ['chart.js'])
             // $scope.addLocBtn = true;
             $scope.locations.push($scope.formData)
             $scope.formData = {};
+            $scope.clearOptions()
            }).error(function(status, data){
             console.error(status);
             console.error(data);

@@ -9,6 +9,7 @@ var mongoose       = require('mongoose');
 var location = require('./app/routes/locationRoutes');
 var customer = require('./app/routes/customerRoutes');
 var admin = require('./app/routes/adminRoutes');
+var passport
 
 // configuration ===========================================
 console.log(process.env.NODE_ENV + ' :::: Environment');

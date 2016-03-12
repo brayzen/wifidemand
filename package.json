@@ -1,4 +1,4 @@
-{
+gd{
   "name": "wifidemand",
   "version": "1.0.0",
   "description": "practice with the mean stack",
@@ -14,7 +14,8 @@
     "express": "^4.13.4",
     "method-override": "^2.3.5",
     "mongoose": "^4.4.5",
-    "passport": "^0.3.2"
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0"
   },
   "devDependencies": {
     "faker": "^3.0.1",
