@@ -15,8 +15,10 @@ video#background {
   height: 500px;
   -webkit-transform: scaleX(2);
   -moz-transform: scaleX(2);
-  background: url('http://res.cloudinary.com/www-virgin-com/virgin-com-prod/sites/virgin.com/files/Articles/Entrepreneur%20Getty/Coffee_shop_laptop_getty_0.jpg') no-repeat;
+  // background: url('http://res.cloudinary.com/www-virgin-com/virgin-com-prod/sites/virgin.com/files/Articles/Entrepreneur%20Getty/Coffee_shop_laptop_getty_0.jpg') no-repeat;
   background-size: cover;
+  // background-color: black;
+  // opacity: .8;
 }
 
 video {
@@ -25,11 +27,13 @@ video {
 
 @media (max-width: 990px) {
     .jumbotron {
-      background-image:url('http://res.cloudinary.com/www-virgin-com/virgin-com-prod/sites/virgin.com/files/Articles/Entrepreneur%20Getty/Coffee_shop_laptop_getty_0.jpg');
+      background:
+        url('../img/test-bg.png');
       background-size:cover;
+      // opacity: .8;
     }
     video#background {
-        display: none;
+      display: none;
     }
 }
 
@@ -37,7 +41,7 @@ video {
   // background-image:url('http://res.cloudinary.com/www-virgin-com/virgin-com-prod/sites/virgin.com/files/Articles/Entrepreneur%20Getty/Coffee_shop_laptop_getty_0.jpg');
   // background-size:cover;
   height:600px;
-  // background-color: gray;
+  background-color: black;
   // opacity: .8;
   border-radius: 0 !important;
   position: absolute;
@@ -80,7 +84,7 @@ video {
   border-radius: 2px !important;
   color: #fff !important;
   font-weight: bold;
-  text-shadow: 0 1px 0 black;
+  // text-shadow: 0 1px 0 black;
   background-color: rgba(52, 152, 219,1.0) !important;
   border-color: rgba(52, 152, 219,1.0) !important;
   border-bottom-color: rgba(41, 128, 185,1.0);
