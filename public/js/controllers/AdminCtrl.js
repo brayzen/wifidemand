@@ -20,11 +20,11 @@ angular.module('AdminCtrl', ['chart.js'])
 
     // Default load all locations to page
     function loadLocations() {
-      if ($scope.locations.length >= 1){
-        console.log('no need for a call');
-      } else {
+      // if ($scope.locations.length >= 1){
+      //   console.log('no need for a call');
+      // } else {
         console.log('making a call to load locations');
-        $http.get('/api/location/all/all')
+        $http.get('/admin/api/location/index')
              .success(function(data){
               console.info(data);
               $scope.locations = data;
@@ -34,7 +34,7 @@ angular.module('AdminCtrl', ['chart.js'])
               console.warn(data);
              });
       }
-    }
+    // }
     loadLocations();
 
 
@@ -67,14 +67,14 @@ angular.module('AdminCtrl', ['chart.js'])
     $scope.addLocation = function() {
       console.log('submitting');
       console.info($scope.formData);
-      $http.post('/api/location', $scope.formData)
+      $http.post('/admin/api/location/new', $scope.formData)
            .success(function(data){
             console.log(data);
             console.info("disply success on screen");
             $scope.formHide = true;
-            $scope.addLocBtn = true;
-            $scope.formData = {};
+            // $scope.addLocBtn = true;
             $scope.locations.push($scope.formData)
+            $scope.formData = {};
            }).error(function(status, data){
             console.error(status);
             console.error(data);
@@ -90,7 +90,7 @@ angular.module('AdminCtrl', ['chart.js'])
 
     $scope.confirmDelete = function(location){
       if (confirm("Are you sure you want to delete this location?")) {
-        $http.post('/api/location/delete/delete', location )
+        $http.post('admin/api/location/delete', location )
              .success(function(data){
               console.log(data);
               // displayMessage(data);
@@ -107,7 +107,7 @@ angular.module('AdminCtrl', ['chart.js'])
       console.log('getting all customers for ' + location.name );
       var locationName = location.name;
 
-      $http.get('/api/customer/' + locationName + '/all')
+      $http.get('/admin/api/' + locationName + '/customers')
            .success(function(data){
             console.log("success: " + data);
             tallyOptions(data);
@@ -133,8 +133,12 @@ angular.module('AdminCtrl', ['chart.js'])
           score[ choice ] = 1
         }
       });
+      // $scope.selected.options.forEach(function(option, index){
+      //   score[index + 1] = option;
+      // })
       $scope.selected.tally = tally;
       $scope.selected.score = score;
+      console.log(score);
       makeChart($scope.selected.score);
     }
 

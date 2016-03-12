@@ -4,6 +4,7 @@ var router = express.Router();
 var Location = require('../models/location');
 var Locnames = require('../models/locationNames');
 var Customer = require('../models/customer');
+var passport = require('passport')
 
 
 //Make a New location
@@ -39,11 +40,9 @@ router.route('/location/index')
   });
 
 //All customers in specific location
-router.route('/:location/all')
+router.route('/:location/customers')
   .get( function(req, res) {
-    var location = req.params.location
-    console.log(location + ' WEEEEEEEEEEEEEEE');
-
+    var location = req.params.location;
     Customer.find({locRef: location}, function(err, result) {
       if (err) {
           console.log(err);
@@ -59,12 +58,17 @@ router.route('/location/delete')
   .post(function(req, res){
     console.log("post request to delete location");
     console.log(req.body)
+    var reqName = req.body.name;
     var id = req.body;
     Location.remove({"_id": id}, function(err, result){
-      if (err) {
-        res.json({error: err});
-      }
+      if (err) { return res.json({error: err} )}
       console.log("success: " + result);
-      res.json(result);
+      Locnames.remove({name: reqName}, function(err, result){
+        if (err) { return res.json(err) }
+        console.log('deleted from both collections');
+        res.json({success: 'deleted from both collections', result});
+      })
     })
   });
+
+module.exports = router;
