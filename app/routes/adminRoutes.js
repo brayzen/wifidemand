@@ -66,7 +66,7 @@ router.route('/location/delete')
       Locnames.remove({name: reqName}, function(err, result){
         if (err) { return res.json(err) }
         console.log('deleted from both collections');
-        res.json({success: 'deleted from both collections', result});
+        res.json({success: 'deleted from both collections', result: result});
       })
     })
   });

@@ -162,11 +162,11 @@ angular.module('AdminCtrl', ['chart.js'])
 
     // Copy format
     $scope.copyCSEmails = function(customers) {
-      emailString = '';
+      var emailString = '';
       $scope.selected.customers.forEach(function(customer, index){
         if (index % 5 === 0){
-          emailString += '\n' + customer.email;
-        } else if (customers[index + 1] === undefined){
+          emailString += '\n' + customer.email + ', ';
+        } else if (customers[index] === undefined){
           emailString += customer.email;
         } else {
           emailString += customer.email + ', ';
