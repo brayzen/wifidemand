@@ -8,9 +8,11 @@ var methodOverride = require('method-override');
 var mongoose       = require('mongoose');
 var location = require('./app/routes/locationRoutes');
 var customer = require('./app/routes/customerRoutes');
+var admin = require('./app/routes/adminRoutes');
 
 // configuration ===========================================
 console.log(process.env.NODE_ENV + ' :::: Environment');
+
 // config files
 var db = require('./config/db');
 
@@ -38,6 +40,10 @@ app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(express.static(__dirname + '/public'));
 
 // routes ==================================================
+app.get('/admin', function(req, res) {
+  res.sendfile('./public/views/index.html'); ///SHOULD BE AUTH FORM
+});
+app.use('/admin/api', admin);
 app.use('/api/location', location);
 app.use('/api/customer', customer);
 app.get('/', function(req, res) {

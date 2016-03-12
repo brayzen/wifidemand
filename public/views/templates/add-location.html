@@ -25,7 +25,7 @@
         <label for="options">Options</label>
       </div>
       <div>
-        <input type="text" name="options" id="option-input" class="form-control col-xs-10 col-md-5"placeholder="Option 1 - 12mbs/$59.99/mo" ng-model="optionToAdd" required>
+        <input type="text" name="options" id="option-input" class="form-control col-xs-10 col-md-5"placeholder="Option 1 - 12mbs/$59.99/mo" ng-model="optionToAdd" ng-required="formData.options.length < 2">
       </div>
       <button id="add-option" ng-click="add(optionToAdd)" class="form-group btn btn-default col-xs-2">&#43 option</button>
 
@@ -33,17 +33,16 @@
     </div>
   </form>
   <div class="col-xs-12 col-sm-11 col-md-6">
-    <h5>Display: </h5>
     <div id="fdata-display">
       <div id="location-content" class="loc-content">
         <h1>{{ formData.name }}</h1>
         <p>{{ formData.description }}</p>
         <dl>
-          <dt><h4>Summary</h4><dt>
+          <dt><h4 ng-show="formData.summary">Summary</h4><dt>
           <dd><p>{{ formData.summary }}</p></dd>
         </dl>
         <dl>
-          <dt><h4>Target</h4><dt>
+          <dt><h4 ng-show="formData.target">Target</h4><dt>
           <dd><p>{{ formData.target }}</p></dd>
         </dl>
         <dl>

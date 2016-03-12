@@ -21,8 +21,7 @@
     <div class="group-options">
       <h3 class="group-options">Options:</h3>
       <div class="options-box">
-        <p class="group-options col-xs-12 col-md-6"> 0 = No selection </p>
-        <p class="group-options col-xs-12 col-md-6" ng-repeat="option in selected.options">{{option}}</p>
+        <p class="ind-option col-xs-12 col-md-6" ng-repeat="option in selected.options track by $index">{{selected.score[$index + 1]*100/selected.tally  | number:0}}% : {{option}} :: [{{selected.score[$index + 1]}}]</p>
       </div>
     </div>
   </div>
