@@ -6,7 +6,6 @@
 @import "index.less";
 
 /* Start fade-in animation tools */
-
 @-webkit-keyframes fadeIn {
   from {
     opacity: 0;
@@ -63,11 +62,10 @@
 }
 
 .fade-in.three {
-  -webkit-animation-delay: .7s;
-  -moz-animation-delay: .7s;
-  animation-delay: .7s;
+  -webkit-animation-delay: .4s;
+  -moz-animation-delay: .4s;
+  animation-delay: .4s;
 }
-
 // End fade-in animation tools
 
 html {
@@ -102,8 +100,8 @@ section.container {
   font-weight: bold;
 }
 
+// Default navbar styling
 .navbar-default {
-  // margin-bottom: 40px !important;
   background-color: rgba(255, 255, 255, 1) !important;
   border: none;
   width: 100%;
@@ -112,10 +110,6 @@ section.container {
 .navbar-default .navbar-nav > li > a {
   font-size: 16px;
   padding: 10px;
-}
-
-.navbar-default .navbar-brand {
-  text-align: center;
 }
 
 .navbar-home .navbar-brand:hover {
@@ -129,6 +123,45 @@ section.container {
 .navbar-toggle {
   margin-left: 5px;
   border: none;
+  padding-top: 10px;
+}
+
+// hamburger "x" animation
+.navbar-toggle {
+  border: none;
+  background: transparent !important;
+
+  &:hover {
+    background: transparent !important;
+  }
+
+  .icon-bar {
+    width: 22px;
+    transition: all 0.2s;
+  }
+  .top-bar {
+    transform: rotate(45deg);
+    transform-origin: 10% 10%;
+  }
+  .middle-bar {
+    opacity: 0;
+  }
+  .bottom-bar {
+    transform: rotate(-45deg);
+    transform-origin: 10% 90%;
+  }
+}
+
+.navbar-toggle.collapsed {
+  .top-bar {
+    transform: rotate(0);
+  }
+  .middle-bar {
+    opacity: 1;
+  }
+  .bottom-bar {
+    transform: rotate(0);
+  }
 }
 
 @media (min-width: 768px) {
@@ -144,17 +177,17 @@ section.container {
     border: none;
     margin-bottom: 0 !important;
   }
-  .navbar-home .navbar-nav > li > a {
+  .navbar .navbar-nav > li > a {
     font-size: 14px;
     padding: 23px 30px 10px 0px;
   }
-  .navbar-home .navbar-brand {
+  .navbar .navbar-brand {
     font-weight: : 700;
     margin-right: 50px;
     font-size: 20px;
     padding-top: 20px;
   }
-  // Custom nav transparency settings only for home page
+  // Nav transparency settings for home page
   .navbar-home {
     background: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, .0)),  !important;
   }
