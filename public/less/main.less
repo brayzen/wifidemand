@@ -76,7 +76,7 @@ html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-color: #ecf0f1;
-    font-family: 'Lato', 'Istok Web', 'Helvetica Neue', sans-serif;
+    font-family: 'Lato', 'Helvetica Neue', sans-serif;
     color: rgb(86, 90, 92);
     overflow: auto;
     height: 100%;
@@ -100,31 +100,6 @@ section.container {
   font-weight: bold;
 }
 
-// Default navbar styling
-.navbar-default {
-  background-color: rgba(255, 255, 255, 1) !important;
-  border: none;
-  width: 100%;
-}
-
-.navbar-default .navbar-nav > li > a {
-  font-size: 16px;
-  padding: 10px;
-}
-
-.navbar-home .navbar-brand:hover {
-  color: #18BC9C !important;
-}
-.navbar-home .navbar-nav > li > a:hover,
-.navbar-home .navbar-nav > li > a:focus {
-  color: #18BC9C !important;
-}
-
-.navbar-toggle {
-  margin-left: 5px;
-  border: none;
-  padding-top: 10px;
-}
 
 // hamburger "x" animation
 .navbar-toggle {
@@ -164,6 +139,44 @@ section.container {
   }
 }
 
+// Default navbar styling
+.navbar-default {
+  background-color: rgba(255, 255, 255, 1) !important;
+  border: none;
+  width: 100%;
+}
+
+.navbar-default .navbar-nav > li > a {
+  font-size: 16px;
+  padding: 10px;
+}
+
+// .navbar .navbar-brand:hover {
+//   color: black !important;
+// }
+
+.navbar .navbar-nav > li > a:hover,
+.navbar .navbar-nav > li > a:focus {
+  color: black !important;
+}
+
+.navbar-default .navbar-nav > li > a:hover {
+  color: black !important;
+}
+
+.navbar-home .navbar-nav > .active > a,
+.navbar-home .navbar-nav > .active > a:hover,
+.navbar-home .navbar-nav > .active > a:focus {
+    color: #FFF;
+    background-color: #AA0000;
+}
+
+.navbar-toggle {
+  margin-left: 5px;
+  border: none;
+  padding-top: 10px;
+}
+
 @media (min-width: 768px) {
   // Global nav settings for screen bigger than tablet
   .navbar div.container {
@@ -187,14 +200,18 @@ section.container {
     font-size: 20px;
     padding-top: 20px;
   }
+  .navbar-default .navbar-nav > li > a:hover,
+  .navbar-default .navbar-nav > li > a:focus {
+    color: orange !important;
+  }
   // Nav transparency settings for home page
   .navbar-home {
     background: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, .0)),  !important;
   }
-  .navbar-home .navbar-nav > li > a {
-    color: #ffffff !important;
-  }
-  .navbar-home .navbar-brand {
-    color: #ffffff !important;
-  }
+  // .navbar-home .navbar-nav > li > a {
+  //   color: #ffffff !important;
+  // }
+  // .navbar-home .navbar-brand {
+  //   color: #ffffff !important;
+  // }
 }
