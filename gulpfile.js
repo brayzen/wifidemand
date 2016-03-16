@@ -71,7 +71,7 @@ gulp.task('start', function () {
 })
 
 gulp.task('watch', function() {
-  gulp.watch('./public/less/*.less', ['lessify', 'start'])
+  gulp.watch('./public/less/*.less', ['lessify', 'start']);
   gulp.watch('./public/js/**', ['jshint']);
 });
 
