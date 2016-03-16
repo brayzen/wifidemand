@@ -1,32 +1,53 @@
-// .background {
-//   background: url(../img/moutain-lake.jpg) no-repeat center center fixed;
-// }
-//
-// .btn-class {
-//   border: 2px solid @main-border-color;
-//   .btn {
-//     background: @main-button-color;
-//   }
-// }
-
-.jumbotron {
-  background-image:url('http://res.cloudinary.com/www-virgin-com/virgin-com-prod/sites/virgin.com/files/Articles/Entrepreneur%20Getty/Coffee_shop_laptop_getty_0.jpg');
-  background-size:cover;
-  height:500px;
-  background-color: gray;
-  // opacity: .8;
-  border-radius: 0 !important;
-  // position: relative;
-  // top: 0;
-  // margin-top: 0;
-  color: #fff !important;
-  // padding-top: 250px !important;
-  font-family: 'Istok Web', 'Helvetica Neue', sans-serif;
+video#background {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  width: auto;
+  min-width: 100%;
+  min-height: 100%;
+  height: 600px;
+  -webkit-transform: scaleX(2);
+  -moz-transform: scaleX(2);
+  background-size: cover;
 }
 
+video {
+  z-index: -100;
+  opacity: .9;
+}
+
+.jumbotron {
+  height:600px;
+  background-color: black;
+  border-radius: 0 !important;
+  top: -50px;
+  color: #fff !important;
+  position: relative;
+  z-index: 101;
+  margin-bottom: -50px;
+}
+
+// Switches from video to screenshot
+@media (max-width: 768px) {
+    .jumbotron {
+      background:
+        linear-gradient(
+        rgba(0, 0, 0, 0.25),
+        rgba(0, 0, 0, 0.25),
+        url('../img/test-bg.png');
+      background-size: cover;
+    }
+    video#background {
+      display: none;
+    }
+}
+
+// jumbotron content overlay
 .jumbo-header {
-  // font-size: 44px;
-  font-weight: 800;
+  font-weight: 700;
   text-transform: uppercase;
 }
 
@@ -40,6 +61,7 @@
   width: 100%;
   display: table;
   position: relative;
+  z-index: 255;
 }
 
 .va-middle {
@@ -47,68 +69,47 @@
   display: table-cell;
 }
 
+// Custom home page button styling
+.btn-home {
+  color: #fff !important;
+}
+
 .btn-home-mobile, .btn-home-mobile:link, .btn-home-mobile:visited {
   width: 100%;
-  border-radius: 2px !important;
-  color: #fff !important;
-  font-weight: bold;
-  text-shadow: 0 1px 0 black;
-  background-color: rgba(52, 152, 219,1.0) !important;
-  border-color: rgba(52, 152, 219,1.0) !important;
-  border-bottom-color: rgba(41, 128, 185,1.0);
+  background-color: #1abc9c !important;
+  border-color: #1abc9c !important;
+  border-bottom-color: #16a085;
 }
 
 .btn-home-mobile:active, .btn-home-mobile:hover {
-  background-color: rgba(41, 128, 185,1.0) !important;
-  color: #fff !important;
-  border-color: rgba(41, 128, 185,1.0) !important;
-  border-bottom-color: rgba(41, 128, 185,1.0);
-  font-weight: bold;
+  background-color: #16a085 !important;
+  border-color: #16a085 !important;
+  border-bottom-color: #16a085;
 }
 
 .btn-home-desktop, .btn-home-desktop:link, .btn-home-desktop:visited {
-  border-radius: 2px !important;
-  color: #fff !important;
-  font-weight: bold;
-  // text-shadow: 0 1px 0 black;
   background-color: rgba(255, 255, 255, .5) !important;
-  // border-color: rgba(255, 255, 255, .5) !important;
   padding: 9px 27px;
-  // border-bottom-color: rgba(255, 255, 255,1);
 }
 
 .btn-home-desktop:active, .btn-home-desktop:hover {
-  color: #fff !important;
   background-color: rgba(0,0,0,0.35) !important;
-  // border-color: rgba(0,0,0,0.35) !important;
-  // border-bottom-color: rgba(41, 128, 185,1.0);
-  font-weight: bold;
 }
 
+// Home page content module styling
 .module-container {
   background-color: #fff;
   max-width: 695px;
-  margin-bottom: 30px;
-}
-
-.module-img {
-  padding-left: 0 !important;
-  padding-right: 0 !important;;
-}
-
-.module-text {
-  // padding: 15px;
-  // font-weight: bold;
-  vertical-align: middle !important;
-  // font-size: 20px;
-  padding: 30px 15px 30px 15px !important;
-  h4 {
-    // text-transform: uppercase !important;
-    font-weight: bold;
+  margin: 40px auto;
+  .module-img {
+    padding-left: 0 !important;
+    padding-right: 0 !important;;
   }
-}
-
-.navbar {
-  margin-bottom: 0;
-  border-radius: 0;
+  .module-text {
+    vertical-align: middle !important;
+    padding: 25px 15px 25px 15px !important;
+    h4 {
+      font-weight: bold;
+    }
+  }
 }
