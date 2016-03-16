@@ -1,7 +1,7 @@
 <section class="form-page container">
   <h4>Select a location</h4>
   <select id="location-selection" class="form-control" ng-change=" getLocationData()" ng-model="selection1" placeholder="-- Select an option --">
-    <option value="" disabled selected>Select your option</option>
+    <option value="" disabled selected>Select your Location option</option>
     <option ng-repeat="loc in townNames track by $index" value="{{ loc }}"> {{ loc }} </option>
   </select>
 

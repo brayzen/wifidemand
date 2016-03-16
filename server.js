@@ -88,6 +88,9 @@ app.get('/', function(req, res) {
 });
 // start app ===============================================
 // startup our app at http://localhost:5000  set in the gulpfile
+app.on('listening', function(){
+  console.log('ok, server is running');
+})
 app.listen(port);
 
 // shoutout to the user
