@@ -1,9 +1,72 @@
+@border-radius: 5px;
+
 @import "../libs/bootstrap/less/bootstrap.less";
 @import "form.less";
 @import "admin.less";
 @import "index.less";
 
-@border-radius: 5px;
+/* Start fade-in animation tools */
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  opacity: 0;
+  /* make things invisible upon start */
+  -webkit-animation: fadeIn ease-in 1;
+  /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+  -moz-animation: fadeIn ease-in 1;
+  animation: fadeIn ease-in 1;
+  -webkit-animation-fill-mode: forwards;
+  /* this makes sure that after animation is done we remain at the last keyframe value (opacity: 1)*/
+  -moz-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  -webkit-animation-duration: .2s;
+  -moz-animation-duration: .2s;
+  animation-duration: .2s;
+}
+
+.fade-in.one {
+  -webkit-animation-delay: 0.0s;
+  -moz-animation-delay: 0.0s;
+  animation-delay: 0.0s;
+}
+
+.fade-in.two {
+  -webkit-animation-delay: .2s;
+  -moz-animation-delay: .2s;
+  animation-delay: .2s;
+}
+
+.fade-in.three {
+  -webkit-animation-delay: .4s;
+  -moz-animation-delay: .4s;
+  animation-delay: .4s;
+}
+// End fade-in animation toolss
 
 html {
   font-size: 10px;
@@ -13,28 +76,127 @@ html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-color: #ecf0f1;
-    font-family: 'Istok Web', 'Helvetica Neue', sans-serif;
+    font-family: 'Lato', 'Istok Web', 'Helvetica Neue', sans-serif;
     color: rgb(86, 90, 92);
+    overflow: auto;
+    height: 100%;
   }
 }
 
-.navbar {
-  margin-bottom: 0 !important;
-  font-family: 'Istok Web', 'Helvetica Neue', sans-serif;
-}
-
-.navbar-default {
-  background-color: #fff !important;
-  border-color: #fff !important;
-}
-
-body {
-  overflow: auto;
-  height: 100%;
+section.container {
+  margin-top: 20px;
 }
 
 .modal-open {
   overflow: auto;
+}
+
+.btn {
+  -webkit-transition-duration: 0.3s;
+  -moz-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  border-radius: 2px !important;
+  font-weight: bold;
+}
+
+// Default navbar styling
+.navbar-default {
+  background-color: rgba(255, 255, 255, 1) !important;
+  border: none;
+  width: 100%;
+}
+
+.navbar-default .navbar-nav > li > a {
+  font-size: 16px;
+  padding: 10px;
+}
+
+.navbar-home .navbar-brand:hover {
+  color: #18BC9C !important;
+}
+.navbar-home .navbar-nav > li > a:hover,
+.navbar-home .navbar-nav > li > a:focus {
+  color: #18BC9C !important;
+}
+
+.navbar-toggle {
+  margin-left: 5px;
+  border: none;
+  padding-top: 10px;
+}
+
+// hamburger "x" animation
+.navbar-toggle {
+  border: none;
+  background: transparent !important;
+
+  &:hover {
+    background: transparent !important;
+  }
+
+  .icon-bar {
+    width: 22px;
+    transition: all 0.2s;
+  }
+  .top-bar {
+    transform: rotate(45deg);
+    transform-origin: 10% 10%;
+  }
+  .middle-bar {
+    opacity: 0;
+  }
+  .bottom-bar {
+    transform: rotate(-45deg);
+    transform-origin: 10% 90%;
+  }
+}
+
+.navbar-toggle.collapsed {
+  .top-bar {
+    transform: rotate(0);
+  }
+  .middle-bar {
+    opacity: 1;
+  }
+  .bottom-bar {
+    transform: rotate(0);
+  }
+}
+
+@media (min-width: 768px) {
+  // Global nav settings for screen bigger than tablet
+  .navbar div.container {
+    margin-left: 15px;
+    margin-right: 0;
+  }
+  .navbar {
+    margin-bottom: 0 !important;
+    border: none;
+    display: table;
+    border: none;
+    margin-bottom: 0 !important;
+  }
+  .navbar .navbar-nav > li > a {
+    font-size: 14px;
+    padding: 23px 30px 10px 0px;
+  }
+  .navbar .navbar-brand {
+    font-weight: : 700;
+    margin-right: 50px;
+    font-size: 20px;
+    padding-top: 20px;
+  }
+  // Nav transparency settings for home page
+  .navbar-home {
+    background: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, .0)),  !important;
+  }
+  .navbar-home .navbar-nav > li > a {
+    color: #ffffff !important;
+  }
+  .navbar-home .navbar-brand {
+    color: #ffffff !important;
+  }
 }
 
 .progress {
