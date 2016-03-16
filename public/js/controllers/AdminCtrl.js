@@ -1,5 +1,5 @@
-angular.module('AdminCtrl', ['chart.js'])
-  .controller('AdminController', function($scope, $http) {
+angular.module('AdminCtrl', ['chart.js', 'flash', 'AuthService'])
+  .controller('AdminController', ['$scope', '$http', '$window', 'flash', function($scope, $http, $window, flash) {
     var counter = 1;
     $scope.locations = [];
     $scope.needShow = true;
@@ -7,78 +7,118 @@ angular.module('AdminCtrl', ['chart.js'])
     $scope.formData.options = [];
     $scope.optionsToAdd = [{}];
     $scope.emailList = [];
+    $scope.authed = false;
 
     $scope.tab = 1;
+    // console.warn(Auth.getTsoken());
+    //AUTH
+    $scope.getToken = function(){
+      return $window.localStorage.jwtWIFI;
+    }
+    $scope.headers = {headers: {Authorization: 'Bearer ' + $scope.getToken()}}
 
     $scope.setTab = function(newValue){
       $scope.tab = newValue;
-    }
+    };
 
     $scope.isSet = function(tabName){
       return $scope.tab === tabName;
+    };
+
+    //AUTH
+    function parseJwt(token) {
+      var base64Url = token.split('.')[1];
+      var base64 = base64Url.replace('-', '+').replace('_', '/');
+      return JSON.parse($window.atob(base64));
     }
+
+    //AUTH
+    function isAuthed(){
+      var token = $scope.getToken();
+      if(token) {
+        var params = parseJwt(token);
+        $scope.authed = Math.round(new Date().getTime() / 1000) <= params.exp;
+        console.log($scope.authed)
+        return $scope.authed;
+      } else {
+        $scope.authed = false;
+        console.log($scope.authed)
+        return $scope.authed;
+      }
+    }
+    //AUTH
+
+    $scope.login = function(){
+      console.log("BOOYA")
+      $http.post('/login', $scope.formData)
+           .then(function(res){
+              console.info(res.data);
+              $scope.formData = {};
+              $window.localStorage.jwtWIFI = res.data.token;
+              $scope.authed = true;
+              loadLocations();
+           }, function(data, status){
+              console.error(data);
+              console.error(status);
+              // flash(status);
+              // flash(data);
+              // $scope.formData = {};
+           });
+    };
 
     // Default load all locations to page
     function loadLocations() {
-      // if ($scope.locations.length >= 1){
-      //   console.log('no need for a call');
-      // } else {
-        console.log('making a call to load locations');
-        $http.get('/admin/api/location/index')
-             .success(function(data){
-              console.info(data);
-              $scope.locations = data;
-             }).error(function(status, data){
-              $('#flash').text('Could not load all locations.  Check connection');
-              console.error(status);
-              console.warn(data);
-             });
+        if(isAuthed()){
+          var token = $scope.getToken();
+          console.log('making a call to load locations');
+          console.warn(token);
+          // var data = $http.headers.common['Authorization'] = 'Bearer ' + token;
+          $http.get('/admin/location/index', {headers: {Authorization: 'Bearer ' + token}})
+               .success(function(data){
+                console.info(data);
+                $scope.locations = data;
+               }).error(function(status, data){
+                console.error(status);
+                console.warn(data);
+                flash(data);
+               });
+         }
       }
     // }
     loadLocations();
 
 
     $scope.add =function(addOption){
-      counter++
-      $scope.formData.options.push(angular.copy(addOption))
+      counter++;
+      $scope.formData.options.push(angular.copy(addOption));
       $scope.optionToAdd = '';
       console.log($scope.optionToAdd);
       $('#option-input').val('').attr('placeholder', 'Option-' + counter).focus();
-    }
+    };
 
     $scope.clearOptions = function(){
       if (confirm("Are you sure you want to clear all options?")) {
         counter = 1;
         $('#option-input').val('').attr('placeholder', 'Option-' + counter).focus();
         $scope.formData.options = [];
-      };
-    }
-    // + button for options - adding an option
-    // $scope.addOption = function(){
-    //   counter++;
-    //   $('.option-section').append('<input type="text" name="options" class="form-control col-xs-11 col-md-12 ng-pristine ng-untouched ng-valid ng-empty"' +
-    //                               ' id="location-option-' + counter + '" placeholder="Option ' + counter + ' - etc." ng-model="formData.options.option' + counter + '">');
-    //   $scope.$watch(function(){
-    //     $scope.formData.options["option" + counter];
-    //   })
-    //   $('#location-content').append('<p ng-binding="formData.options.option' + counter + '"></p>')
-    // };
+      }
+    };
 
     $scope.addLocation = function() {
       console.log('submitting');
       console.info($scope.formData);
-      $http.post('/admin/api/location/new', $scope.formData)
+      $http.post('/admin/location/new', $scope.formData, $scope.headers)
            .success(function(data){
             console.log(data);
             console.info("disply success on screen");
             $scope.formHide = true;
-            // $scope.addLocBtn = true;
-            $scope.locations.push($scope.formData)
+            $scope.locations.push($scope.formData);
             $scope.formData = {};
-            $scope.clearOptions()
+            $scope.clearOptions();
            }).error(function(status, data){
             console.error(status);
             console.error(data);
+            flash(data);
            });
     };
 
@@ -91,7 +131,7 @@ angular.module('AdminCtrl', ['chart.js'])
 
     $scope.confirmDelete = function(location){
       if (confirm("Are you sure you want to delete this location?")) {
-        $http.post('admin/api/location/delete', location )
+        $http.post('admin/location/delete', location, $scope.headers)
              .success(function(data){
               console.log(data);
               // displayMessage(data);
@@ -100,6 +140,7 @@ angular.module('AdminCtrl', ['chart.js'])
              }).error(function(data, status){
               console.error(status);
               console.warn(data);
+              flash(data);
              });
       }
     };
@@ -108,7 +149,7 @@ angular.module('AdminCtrl', ['chart.js'])
       console.log('getting all customers for ' + location.name );
       var locationName = location.name;
 
-      $http.get('/admin/api/' + locationName + '/customers')
+      $http.get('/admin/' + locationName + '/customers', $scope.headers)
            .success(function(data){
             console.log("success: " + data);
             tallyOptions(data);
@@ -116,6 +157,7 @@ angular.module('AdminCtrl', ['chart.js'])
            }).error(function(data, status){
             console.error(status);
             console.error(data);
+            flash(data);
            });
     }
 
@@ -124,19 +166,16 @@ angular.module('AdminCtrl', ['chart.js'])
       var tally = 0;
 
       customerArr.forEach(function(customer){
-        tally++
+        tally++;
         var keys = Object.keys(score);
         var choice = customer.choice.toString();
         if ( keys.indexOf( choice ) > -1 ) {
           console.log('already created');
-          score[ choice ] += 1
+          score[ choice ] += 1;
         } else {
-          score[ choice ] = 1
+          score[ choice ] = 1;
         }
       });
-      // $scope.selected.options.forEach(function(option, index){
-      //   score[index + 1] = option;
-      // })
       $scope.selected.tally = tally;
       $scope.selected.score = score;
       console.log(score);
@@ -147,7 +186,7 @@ angular.module('AdminCtrl', ['chart.js'])
       console.log('SHOWING TABLE');
       $scope.hideCustTable = false;
       $scope.showData = false;
-    }
+    };
 
     // Chart.js
     function makeChart(score) {
@@ -174,5 +213,5 @@ angular.module('AdminCtrl', ['chart.js'])
         }
       });
       $scope.selected.emails = emailString;
-    }
-})
+    };
+}]);

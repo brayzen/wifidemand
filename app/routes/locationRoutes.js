@@ -14,8 +14,8 @@ router.route('/get/names')
       }
       console.log(result);
       res.json(result);
-    })
-  })
+    });
+  });
 
 router.route('/:name')
   .get( function(req, res) {

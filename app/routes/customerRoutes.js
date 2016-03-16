@@ -15,27 +15,10 @@ router.route('/')
     });
   });
 
-//Authenticate
-//All customers in specific location
-// router.route('/:location/all')
-//   .get( function(req, res) {
-//     var location = req.params.location
-//     console.log(location + ' WEEEEEEEEEEEEEEE');
-
-//     Customer.find({locRef: location}, function(err, result) {
-//       if (err) {
-//           console.log(err);
-//           res.json({error: err});
-//       }
-//       console.log('Sent all the customer for ' + location);
-//       res.json(result);
-//     })
-//   })
-
 // returns just the number
 router.route('/tally/:location')
       .get( function(req, res) {
-        console.log("requst for customer tally")
+        console.log("requst for customer tally");
         var name = req.params.location;
         Customer.find({locRef: name}, function(err, result) {
           if (err) {
@@ -45,7 +28,7 @@ router.route('/tally/:location')
             console.log('Success here is the tally of all the customer for ' + name + ': ' + result.length);
             res.json(result.length);
           }
-        })
-      })
+        });
+      });
 
 module.exports = router;

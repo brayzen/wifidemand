@@ -1,16 +1,23 @@
-
-
 // modules =================================================
-var express        = require('express');
-var app            = express();
-var bodyParser     = require('body-parser');
-var methodOverride = require('method-override');
-var mongoose       = require('mongoose');
-var location = require('./app/routes/locationRoutes');
-var customer = require('./app/routes/customerRoutes');
-var admin = require('./app/routes/adminRoutes');
-var passport
+var mongoose       = require('mongoose')
+  , path           = require('path')
+  , express        = require('express')
+  , app            = express()
+  , cookieParser   = require('cookie-parser')
+  , session        = require('express-session')
+  , flash          = require('express-flash')
+  , bodyParser     = require('body-parser')
+  , methodOverride = require('method-override');
+var passport       = require('./config/passport');
+var jwt            = require('express-jwt');
+var location       = require('./app/routes/locationRoutes');
+var customer       = require('./app/routes/customerRoutes');
+var admin          = require('./app/routes/adminRoutes');
+var User           = require('./app/models/user');
 
+var auth = jwt({secret: process.env.SECRET_CRYPTO || 'secret', userProperty: 'payload'});
+
+// console.log(flash);
 // configuration ===========================================
 console.log(process.env.NODE_ENV + ' :::: Environment');
 
@@ -21,36 +28,64 @@ var db = require('./config/db');
 var port = process.env.PORT || 4000;
 
 // connect to our mongoDB database
-// (uncomment after you enter in your own credentials in config/db.js)
 mongoose.connect(db.url);
 
+// SET VIEW ENGINE.....could be JADE
+app.set('view engine', 'html');
 // get all data/stuff of the body (POST) parameters
 // parse application/json
-app.use(bodyParser.json());
-
-// parse application/vnd.api+json as json
-app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
-
-// parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: true }));
-
-// override with the X-HTTP-Method-Override header in the request. simulate DELETE/PUT
-app.use(methodOverride('X-HTTP-Method-Override'));
-
-// set the static files location /public/img will be /img for users
 app.use(express.static(__dirname + '/public'));
+app.use(cookieParser(process.env.SESSION_SECRET || 'secret'));
+app.use(bodyParser.json());
+app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(methodOverride('X-HTTP-Method-Override'));
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'secret',
+  resave: false,
+  saveUninitialized: false,
+  maxAge: 60000
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
 
 // routes ==================================================
-app.get('/admin', function(req, res) {
-  res.sendfile('./public/views/index.html'); ///SHOULD BE AUTH FORM
+app.get('/login', function(req, res){
+    console.log('GET login route');
+    res.sendfile('./public/views/templates/login.html');
 });
-app.use('/admin/api', admin);
+
+app.post('/login', function(req, res, next){
+  if(!req.body.username || !req.body.password){
+    return res.status(400).json({message: 'Please fill out all fields'});
+  }
+
+  passport.authenticate('local', function(err, user, info){
+    if (err) { return next(err); }
+    if (user) {
+      return res.json({token: user.generateJWT()});
+    } else {
+      return res.status(401).json(info);
+    }
+  })(req, res, next)
+
+
+});
+
+
+  // .post(passport.authenticate('local', {failureFlash: 'failed in /login POST'}), function(req, res){
+  //   console.log('POST to login route');
+  //   console.log(req.user)
+  //   res.sendfile('.public/views/admin-index.html');
+  // })
+
+app.use('/admin', auth, admin);
 app.use('/api/location', location);
 app.use('/api/customer', customer);
 app.get('/', function(req, res) {
   res.sendfile('./public/views/index.html'); // load our public/index.html file
 });
-
 // start app ===============================================
 // startup our app at http://localhost:5000  set in the gulpfile
 app.listen(port);
