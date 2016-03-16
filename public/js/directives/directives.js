@@ -12,7 +12,7 @@ angular.module('Directives', [])
       restrict: 'AE',
       transclude: true,
       templateUrl: "../views/templates/customer-table.html"
-    }
+    };
   })
 
   .directive('addLocation', function(){
@@ -20,5 +20,5 @@ angular.module('Directives', [])
       restrict: 'E',
       transclude: false,
       templateUrl: "../views/templates/add-location.html"
-    }
-  })
+    };
+  });

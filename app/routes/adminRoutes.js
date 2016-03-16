@@ -1,15 +1,16 @@
-var express = require('express');
-var router = express.Router();
-// grab the location model we just created
+var express  = require('express');
+var router   = express.Router();
 var Location = require('../models/location');
 var Locnames = require('../models/locationNames');
 var Customer = require('../models/customer');
-var passport = require('passport')
+var passport = require('passport');
+var jwt      = require('express-jwt');
 
+var auth = jwt({secret: process.env.SECRET_CRYPTO || 'secret', userProperty: 'payload'});
 
 //Make a New location
 router.route('/location/new')
-  .post(function(req, res){
+  .post(auth, function(req, res){
     console.log("Post request for a new location");
     var reqData = req.body;
     var reqName = reqData.name;
@@ -28,8 +29,9 @@ router.route('/location/new')
 
 //get all location objects
 router.route('/location/index')
-  .get(function(req, res){
+  .get(auth, function(req, res){
     console.log("get data for all locations");
+    console.log(req.headers.Authorization);
     Location.find(function(err, result){
       if (err) {
         console.error(err);
@@ -50,25 +52,24 @@ router.route('/:location/customers')
       }
       console.log('Sent all the customer for ' + location);
       res.json(result);
-    })
-  })
+    });
+  });
 
 // Delete a location
 router.route('/location/delete')
   .post(function(req, res){
     console.log("post request to delete location");
-    console.log(req.body)
     var reqName = req.body.name;
     var id = req.body;
     Location.remove({"_id": id}, function(err, result){
-      if (err) { return res.json({error: err} )}
+      if (err) { return res.json({error: err} );}
       console.log("success: " + result);
       Locnames.remove({name: reqName}, function(err, result){
-        if (err) { return res.json(err) }
+        if (err) { return res.json(err); }
         console.log('deleted from both collections');
-        res.json({success: 'deleted from both collections', result});
-      })
-    })
+        res.json({success: 'deleted from both collections', result: result});
+      });
+    });
   });
 
 module.exports = router;

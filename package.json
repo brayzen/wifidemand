@@ -10,13 +10,23 @@
   "author": "Brian Ray",
   "license": "MIT",
   "dependencies": {
+    "angular-cookies": "^1.5.0",
     "body-parser": "^1.15.0",
+    "cookie-parser": "^1.4.1",
+    "crypto-js": "^3.1.6",
     "express": "^4.13.4",
+    "express-flash": "0.0.2",
+    "express-jwt": "^3.3.0",
+    "jsonwebtoken": "^5.7.0",
     "method-override": "^2.3.5",
     "mongoose": "^4.4.5",
-    "passport": "^0.3.2"
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "path": "^0.12.7",
+    "session": "^0.1.0"
   },
   "devDependencies": {
+    "express-session": "^1.13.0",
     "faker": "^3.0.1",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.0",
