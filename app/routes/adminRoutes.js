@@ -8,14 +8,6 @@ var jwt      = require('express-jwt');
 
 var auth = jwt({secret: process.env.SECRET_CRYPTO || 'secret', userProperty: 'payload'});
 
-
-router.route('/')
-    .get(function(req, res){
-      console.log(req);
-      console.log('HERE AT THE ADMIN INDEX point')
-      res.sendfile('../../public/views/admin-index.html');
-    })
-
 //Make a New location
 router.route('/location/new')
   .post(auth, function(req, res){

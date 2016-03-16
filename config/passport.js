@@ -1,7 +1,7 @@
 var passport      = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var flash         = require('express-flash');
-var SHA256        = require("crypto-js/sha256")
+var SHA256        = require("crypto-js/sha256");
 var User          = require('../app/models/user');
 
 
@@ -32,7 +32,7 @@ passport.serializeUser(function(user, done) {
 
 // used to deserialize the user
 passport.deserializeUser(function(id, done) {
-    SHA256.decrypt(id, process.env.SECRET_CRYPTO || 'secret')
+    SHA256.decrypt(id, process.env.SECRET_CRYPTO || 'secret');
     User.findById(id, function(err, user) {
         done(err, user);
     });

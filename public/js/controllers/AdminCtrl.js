@@ -14,8 +14,9 @@ angular.module('AdminCtrl', ['chart.js', 'flash', 'AuthService'])
     //AUTH
     $scope.getToken = function(){
       return $window.localStorage.jwtWIFI;
-    }
-    $scope.headers = {headers: {Authorization: 'Bearer ' + $scope.getToken()}}
+    };
+
+    $scope.headers = {headers: {Authorization: 'Bearer ' + $scope.getToken()}};
 
     $scope.setTab = function(newValue){
       $scope.tab = newValue;
@@ -38,18 +39,16 @@ angular.module('AdminCtrl', ['chart.js', 'flash', 'AuthService'])
       if(token) {
         var params = parseJwt(token);
         $scope.authed = Math.round(new Date().getTime() / 1000) <= params.exp;
-        console.log($scope.authed)
         return $scope.authed;
       } else {
         $scope.authed = false;
-        console.log($scope.authed)
         return $scope.authed;
       }
     }
     //AUTH
 
     $scope.login = function(){
-      console.log("BOOYA")
+      flash();
       $http.post('/login', $scope.formData)
            .then(function(res){
               console.info(res.data);
@@ -57,11 +56,10 @@ angular.module('AdminCtrl', ['chart.js', 'flash', 'AuthService'])
               $window.localStorage.jwtWIFI = res.data.token;
               $scope.authed = true;
               loadLocations();
-           }, function(data, status){
+           }, function(data){
               console.error(data);
-              console.error(status);
-              // flash(status);
-              // flash(data);
+              console.error(data.status);
+              flash('Incorrect creditials: "' + data.statusText + '"');
               // $scope.formData = {};
            });
     };

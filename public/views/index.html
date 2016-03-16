@@ -61,8 +61,7 @@
           </ul>
         </div>
 ======= -->
-<body ng-app="sampleApp" >
-  <flash:messages></flash:messages>
+<body ng-app="sampleApp" ng-controller="AdminController" >
   <nav class="navbar navbar-default navbar-home navbar-static-top offset-3 pull right">
     <div class="container">
       <div class="navbar-header">
@@ -78,12 +77,13 @@
         <ul class="nav navbar-nav">
           <li><a data-toggle="collapse" data-target=".navbar-collapse" href="#/locations">Locations</a>
           </li>
-          <li ng-show="authed"><a data-toggle="collapse" data-target=".navbar-collapse"  href="#/admin" ng-cloak>Admin</a>
+          <li><a data-toggle="collapse" data-target=".navbar-collapse"  href="#/admin" ng-show="authed" ng-cloak>Admin</a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
+  <flash:messages></flash:messages>
 
   <!-- ANGULAR DYNAMIC CONTENT   -->
   <div ng-view class="fade-in one"></div>

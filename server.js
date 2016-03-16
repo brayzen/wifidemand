@@ -80,7 +80,7 @@ app.post('/login', function(req, res, next){
   //   res.sendfile('.public/views/admin-index.html');
   // })
 
-app.use('/admin', auth, admin);
+app.use('/admin', auth,  admin);
 app.use('/api/location', location);
 app.use('/api/customer', customer);
 app.get('/', function(req, res) {

@@ -23,7 +23,6 @@ var publicDir = {
   views: '/public/views/'
 }
 
-process.env.PORT = 1337;
 //Vendor path var
 var bowerDir = curr + '/public/libs/';
 

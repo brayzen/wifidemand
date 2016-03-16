@@ -1,15 +1,16 @@
 angular.module('AuthService', []).service('Auth', function($scope, $http, $window) {
+    $scope.authed = false;
 
     this.getToken = function(){
       return $window.localStorage.jwtWIFI;
-    }
+    };
 
         //AUTH
     this.parseJwt = function(token){
       var base64Url = token.split('.')[1];
       var base64 = base64Url.replace('-', '+').replace('_', '/');
       return JSON.parse($window.atob(base64));
-    }
+    };
 
     //AUTH
     this.isAuthed = function(){
@@ -23,6 +24,6 @@ angular.module('AuthService', []).service('Auth', function($scope, $http, $windo
         $scope.authed = false;
         return false;
       }
-    }
+    };
 
 });
