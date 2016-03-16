@@ -13,7 +13,8 @@
     "body-parser": "^1.15.0",
     "express": "^4.13.4",
     "method-override": "^2.3.5",
-    "mongoose": "^4.4.5"
+    "mongoose": "^4.4.5",
+    "passport": "^0.3.2"
   },
   "devDependencies": {
     "faker": "^3.0.1",
@@ -27,6 +28,7 @@
     "gulp-nodemon": "^2.0.6",
     "gulp-rimraf": "^0.2.0",
     "gulp-uglify": "^1.5.3",
+    "gulp-watch": "^4.3.5",
     "jshint": "^2.9.1"
   },
   "repository": {

@@ -1,19 +1,21 @@
 angular.module('LocationCtrl', [])
        .controller('LocationController', ['$scope', '$http', function($scope, $http) {
     $scope.formData = {};
+    $scope.hidePage = true;
     $scope.hideForm = true;
     $scope.locationName = {};
+    $scope.showSuccess = false;
 
-    //Populate selection box with location names\
+
+    //Populate selection box with location names
     $http.get('/api/location/get/names')
         .success(function(data){
+            console.log(data);
             var arr = [];
             data.forEach(function(location){
                 arr.push(location.name);
             });
             $scope.townNames = arr;
-            console.log($scope.townNames);
-            // timeSetter();
         }).error(function(status, data){
             console.log(status);
             console.log(data);
@@ -28,9 +30,9 @@ angular.module('LocationCtrl', [])
             var newData = data["0"];
             console.log(newData);
             $scope.location = newData;
+            $scope.hidePage = false;
             $scope.hideForm = false;
             getCustomerTally(newData);
-            console.warn($scope.tally);
           }).error(function(status, data){
             console.error(data, status);
           });
@@ -45,10 +47,10 @@ angular.module('LocationCtrl', [])
       $http.post('/api/customer', formData)
            .success(function(data){
             console.log(data);
-            console.info("disply success on screen");
-            $scope.formHide = true;
-            $scope.addLocBtn = true;
+            $scope.tally++
             $scope.formData = {};
+            $scope.hideForm = true;
+            $scope.showSuccess = true;
            }).error(function(status, data){
             console.error(status);
             console.error(data);
@@ -56,8 +58,8 @@ angular.module('LocationCtrl', [])
     };
 
     function getCustomerTally(location) {
-      var location = location.name;
-      $http.get('/api/customer/tally/'+ location)
+      var name = location.name;
+      $http.get('/api/customer/tally/'+ name)
            .then(function(res){
             console.info('Successful call: tally = ' + res.data);
             $scope.tally = res.data;
