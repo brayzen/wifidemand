@@ -7,16 +7,15 @@ angular.module('AdminCtrl', ['chart.js', 'flash', 'AuthService'])
     $scope.formData.options = [];
     $scope.optionsToAdd = [{}];
     $scope.emailList = [];
-    $scope.authed = false;
+    $scope.ifAuthed = false;
 
     $scope.tab = 1;
     // console.warn(Auth.getTsoken());
     //AUTH
     $scope.getToken = function(){
-      return $window.localStorage.jwtWIFI;
+      return $window.localStorage.jwtWIFI || null;
     };
 
-    $scope.headers = {headers: {Authorization: 'Bearer ' + $scope.getToken()}};
 
     $scope.setTab = function(newValue){
       $scope.tab = newValue;
@@ -38,24 +37,27 @@ angular.module('AdminCtrl', ['chart.js', 'flash', 'AuthService'])
       var token = $scope.getToken();
       if(token) {
         var params = parseJwt(token);
-        $scope.authed = Math.round(new Date().getTime() / 1000) <= params.exp;
-        return $scope.authed;
+        var answer = Math.round(new Date().getTime() / 1000) <= params.exp;
+        $scope.ifAuthed = answer;
+        if (answer) {
+          $scope.headers = {headers: {Authorization: 'Bearer ' + $scope.getToken()}};
+        }
+        return answer
       } else {
-        $scope.authed = false;
-        return $scope.authed;
+        $scope.ifAuthed = false;
+        return false
       }
     }
     //AUTH
 
     $scope.login = function(){
-      flash();
       $http.post('/login', $scope.formData)
            .then(function(res){
               console.info(res.data);
               $scope.formData = {};
               $window.localStorage.jwtWIFI = res.data.token;
-              $scope.authed = true;
               loadLocations();
+              $scope.headers = {headers: {Authorization: 'Bearer ' + $scope.getToken()}} || null;
            }, function(data){
               console.error(data);
               console.error(data.status);
@@ -103,32 +105,34 @@ angular.module('AdminCtrl', ['chart.js', 'flash', 'AuthService'])
     };
 
     $scope.addLocation = function() {
-      console.log('submitting');
-      console.info($scope.formData);
-      $http.post('/admin/location/new', $scope.formData, $scope.headers)
-           .success(function(data){
-            console.log(data);
-            console.info("disply success on screen");
-            $scope.formHide = true;
-            $scope.locations.push($scope.formData);
-            $scope.formData = {};
-            $scope.clearOptions();
-           }).error(function(status, data){
-            console.error(status);
-            console.error(data);
-            flash(data);
-           });
+      if (isAuthed()) {
+        $http.post('/admin/location/new', $scope.formData, $scope.headers)
+             .success(function(data){
+              console.log(data);
+              console.info("disply success on screen");
+              $scope.formHide = true;
+              $scope.locations.push($scope.formData);
+              $scope.formData = {};
+              $scope.clearOptions();
+             }).error(function(status, data){
+              console.error(status);
+              console.error(data);
+              flash(data);
+             });
+      }
     };
 
     $scope.showLocationStats = function(location){
-      $scope.selected = location;
-      $scope.setTab(3);
-      $scope.needShow = false;
-      getCustomers(location);
+      if(isAuthed()){
+        $scope.selected = location;
+        $scope.setTab(3);
+        $scope.needShow = false;
+        getCustomers(location);
+      }
     };
 
     $scope.confirmDelete = function(location){
-      if (confirm("Are you sure you want to delete this location?")) {
+      if (isAuthed() && confirm("Are you sure you want to delete this location?")) {
         $http.post('admin/location/delete', location, $scope.headers)
              .success(function(data){
               console.log(data);
@@ -144,19 +148,20 @@ angular.module('AdminCtrl', ['chart.js', 'flash', 'AuthService'])
     };
 
     function getCustomers(location) {
-      console.log('getting all customers for ' + location.name );
-      var locationName = location.name;
+      if (isAuthed()){
+        console.log('getting all customers for ' + location.name );
+        var locationName = location.name;
 
-      $http.get('/admin/' + locationName + '/customers', $scope.headers)
-           .success(function(data){
-            console.log("success: " + data);
-            tallyOptions(data);
-            $scope.selected.customers = data;
-           }).error(function(data, status){
-            console.error(status);
-            console.error(data);
-            flash(data);
-           });
+        $http.get('/admin/' + locationName + '/customers', $scope.headers)
+             .success(function(data){
+              tallyOptions(data);
+              $scope.selected.customers = data;
+             }).error(function(data, status){
+              console.error(status);
+              console.error(data);
+              flash(data.statusText);
+             });
+      }
     }
 
     function tallyOptions(customerArr){

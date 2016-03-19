@@ -3,7 +3,6 @@ var mongoose       = require('mongoose')
   , path           = require('path')
   , express        = require('express')
   , app            = express()
-  , cookieParser   = require('cookie-parser')
   , session        = require('express-session')
   , flash          = require('express-flash')
   , bodyParser     = require('body-parser')
@@ -35,7 +34,6 @@ app.set('view engine', 'html');
 // get all data/stuff of the body (POST) parameters
 // parse application/json
 app.use(express.static(__dirname + '/public'));
-app.use(cookieParser(process.env.SESSION_SECRET || 'secret'));
 app.use(bodyParser.json());
 app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 app.use(bodyParser.urlencoded({ extended: true }));

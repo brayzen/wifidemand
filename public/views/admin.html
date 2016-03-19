@@ -2,7 +2,7 @@
     <h1>Admin Panel</h1>
     <!-- display contents on right side....remove if on mobile -->
 </section>
-  <section class="container-fluid col-xs-12" ng-hide="authed">
+  <section class="container-fluid col-xs-12" ng-hide="ifAuthed">
     <div class="row form-bucket">
       <form class="col-xs-12 col-md-6" ng-submit>
         <div class"form-group">
@@ -20,7 +20,7 @@
     </div>
   </section>
 <!-- Location index -->
-<section ng-show="authed" class="container">
+<section ng-show="ifAuthed" class="container">
   <div class="row">
     <h3 class="col-xs-4 col-sm-3 col-md-2" style="margin-top:.5rem">Locations</h3>
     <ul class="nav nav-pills">
@@ -31,7 +31,7 @@
     </ul>
   </div>
 </section>
-  <article ng-show="isSet(1) && authed" class="container">
+  <article ng-show="ifAuthed && isSet(1)" class="container">
     <div class="table-css col-xs-12">
       <div class="t-head">
         <div class="th-cell">Name</div>
