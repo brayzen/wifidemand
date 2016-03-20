@@ -60,7 +60,7 @@ angular.module('LocationCtrl', ['flash'])
 
           function getCustomerTally(location) {
             var name = location.name;
-            $http.get('/api/customer/tally/'+ name)
+            $http.post('/api/customer/tally/'+ name, location )
                  .then(function(res){
                   console.info('Successful call: tally = ' + res.data);
                   $scope.tally = res.data;

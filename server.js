@@ -71,13 +71,6 @@ app.post('/login', function(req, res, next){
 
 });
 
-
-  // .post(passport.authenticate('local', {failureFlash: 'failed in /login POST'}), function(req, res){
-  //   console.log('POST to login route');
-  //   console.log(req.user)
-  //   res.sendfile('.public/views/admin-index.html');
-  // })
-
 app.use('/admin', auth,  admin);
 app.use('/api/location', location);
 app.use('/api/customer', customer);
