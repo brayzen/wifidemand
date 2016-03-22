@@ -29,9 +29,18 @@
         </div>
     </div>
     <form name="customerForm" ng-hide="hideForm" class="col-xs-12 col-md-4" ng-submit novalidate>
-      <div class="form-group">
         <hr>
-        <h3 class="form-head">Add your name to list and select your preferred option:</h3>
+        <h3 class="form-head">Select your preferred option and Add your name to list:</h3>
+      <div class="form-group location-options">
+        <label for="options">Choose an Option</label>
+        <div class="radio" ng-repeat="option in location.options track by $index">
+          <label>
+            <input type="radio" id="customer-option" value="{{ $index + 1 }}" ng-model="formData.choice" required>
+              {{ option }}
+          </label>
+        </div>
+      </div>
+      <div class="form-group">
         <label for="firstName">First Name</label>
         <input type="text" ng-minlength="2" name="firstName" class="form-control" id="customer-first-name" placeholder="first name" ng-model="formData.firstName" required>
         <p ng-show="customerForm.firstName.$error.minlength" class="help-block has-error">Name is too short</p>
@@ -58,7 +67,7 @@
         <input type="text" name="phone" ng-minlength="10" ng-maxlength="12" class="form-control" id="customer-phone" placeholder="000-000-0000" ng-model="formData.phone" required>
         <p ng-show="customerForm.phone.$invalid && !customerForm.phone.$pristine" class="help-block has-error">Enter valid 10 digit Phone Number.</p>
       </div>
-      <div class="form-inline">
+      <!-- <div class="form-inline"> -->
         <div class="form-group">
           <label for="state">State</label>
           <select class="form-control" id="customer-state" name="state" ng-model="formData.state" required>
@@ -121,16 +130,7 @@
           <label for="zip">Zipcode</label>
           <input type="number" class="form-control" id="customer-zip" placeholder="00000" ng-model="formData.zip" required>
         </div>
-      </div>
-      <div class="location-options">
-        <label for="options">Choose an Option</label>
-        <div class="radio" ng-repeat="option in location.options track by $index">
-          <label>
-            <input type="radio" id="customer-option" value="{{ $index + 1 }}" ng-model="formData.choice" required>
-              {{ option }}
-          </label>
-        </div>
-      </div>
+      <!-- </div> -->
       <button type="submit" ng-click="makeCustomer()" id="submit-customer" ng-disabled="customerForm.$invalid" class="btn btn-default">Submit</button>
     </form>
   </section>
