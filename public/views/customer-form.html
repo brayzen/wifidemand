@@ -1,6 +1,6 @@
 <section class="form-page container">
   <h4>Select a location</h4>
-  <select id="location-selection" class="form-control" ng-change=" getLocationData()" ng-model="selection1" placeholder="-- Select an option --">
+  <select id="location-selection" class="form-control col-xs-12 col-md-8 col-lg-7" ng-change=" getLocationData()" ng-model="selection1" placeholder="-- Select an option --">
     <option value="" disabled selected>Select your Location option</option>
     <option ng-repeat="loc in townNames track by $index" value="{{ loc }}"> {{ loc }} </option>
   </select>
@@ -134,15 +134,17 @@
       <button type="submit" ng-click="makeCustomer()" id="submit-customer" ng-disabled="customerForm.$invalid" class="btn btn-default">Submit</button>
     </form>
   </section>
-  <section class="container" ng-show="showSuccess">
+  <section class="container share" ng-show="showSuccess">
     <h2>Thank you for submittal.  Check your email inbox.</h2>
-    <!-- Email -->
-    <h3>The speed by which we can bring this internet to your community is determined by you and sharing this with your neigbors.</h3>
-    <div class="container row">
-      <a href="mailto:?Subject=Finally a new internet option for our community!&amp;Body=I%20saw%20this%20and%20thought%20of%20you!%20%20More%20People%20=%20More%20Power%20=%20Better%20Internet%20=%20Lower%20Cost%20 {{fullPath}}"><img src="../img/email-btn.png" alt="Email"/></a>
+    <div id="share-text" class="col-xs-12 col-md-8 col-lg-7">
+      <h3>The speed by which we can bring better internet to your community is determined by you and your sharing this with your neighbors.</h3>
+    </div>
+    <div id="share-buttons" class="col-xs-12 col-md-8 col-lg-7">
+      <!-- Email -->
+      <a href="mailto:?Subject=Finally a new internet option for our community!&amp;Body=I%20saw%20this%20and%20thought%20of%20you!%20%20More%20People%20=%20More%20Power%20=%20Better%20Internet%20=%20Lower%20Cost%20 {{fullPath}}"><img class="" src="../img/email-btn.png" alt="Email"/></a>
 
       <!-- Facebook -->
-      <a href="http://www.facebook.com/sharer.php?u={{fullPath}}" target="_blank"><img src="../img/facebook-btn.png" alt="Facebook" /></a>
+      <a href="http://www.facebook.com/sharer.php?u={{fullPath}}" target="_blank"><img class="" src="../img/facebook-btn.png" alt="Facebook" /></a>
     </div>
   </section>
 </section>
