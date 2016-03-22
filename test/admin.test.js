@@ -14,6 +14,7 @@ var reqData = {
   reqNum: 140,
   options: {opts: ['Test Option 1', 'Test Option 2', 'Test Option 3']}
 }
+
 describe('Location', function(){
   describe('#save()', function(){
     it('should save without error', function(done){
@@ -31,10 +32,9 @@ describe('Location', function(){
 describe('LocName', function(){
   describe('#save()', function(){
     it('should save without error', function(done){
-      console.log(reqData.name);
-      console.log('^^^^^^^^^^^^^^^^')
-      console.log('^^^^^^^^^^^^^^^^')
-      new LocNames(reqData.name).save(function(err, result){
+      var name = reqData.name;
+
+      new LocNames(name).save(function(err, result){
         if (err) {console.log(err);}
         console.log(result);
         done();

@@ -1,10 +1,11 @@
 module.exports = {
-  email: function(name, reqNum){
+  email: function(locationName, reqNum){
     return {
-        to: 'bray213@gmail.com',
-        from: 'brayzenone@gmail.com',
-        subject: 'Location: ' + name + ', has met the minimum required number for investment',
-        html: '<h1> Check your dashboard, ' + name + ' has crossed the threshold of ' + reqNum + ' people</h1>'
+        to: process.env.TO_EMAIL,
+        from: process.env.FROM_EMAIL,
+        // from: 'brayzenone@gmail.com',
+        subject: 'Location: ' + locationName + ', has met the minimum required number for investment',
+        html: '<h1> Check your dashboard, ' + locationName + ' has crossed the threshold of ' + reqNum + ' people</h1>'
     }
   }
 }

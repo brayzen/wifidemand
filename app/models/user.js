@@ -25,8 +25,8 @@ authUser.methods.generateJWT = function() {
   // set expiration to 60 days
   var today = new Date();
   var exp = new Date(today);
-  exp.setDate(today.getMinutes() + 120); /// 2 minutes later it will expire()
-  // exp.setDate(today.getDate() + 1); /// 1 day later it expires
+  // exp.setMinutes(today.getMinutes() + 2); /// 2 minutes later it will expire()
+  exp.setDate(today.getDate() + 1); /// 1 day later it expires
 
   return jwt.sign({
     _id: this._id,

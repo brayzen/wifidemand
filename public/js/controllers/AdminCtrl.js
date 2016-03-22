@@ -48,12 +48,11 @@ angular.module('AdminCtrl', ['chart.js', 'flash', 'AuthService'])
         return false
       }
     }
-    //AUTH
 
+    //AUTH
     $scope.login = function(){
       $http.post('/login', $scope.formData)
            .then(function(res){
-              console.info(res.data);
               $window.localStorage.jwtWIFI = res.data.token;
               loadLocations();
               $scope.headers = {headers: {Authorization: 'Bearer ' + $scope.getToken()}} || null;
