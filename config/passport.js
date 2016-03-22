@@ -10,8 +10,8 @@ var User          = require('../app/models/user');
 passport.use(new LocalStrategy(function(username, password, done) {
   User.findOne({username: username}, function(err, user){
     if(err){
-      console.log('Passport message: "failed, incorrect username, cant be found"');
-      return done(null, false, {message: "failed, incorrect username, can't be found"});
+      console.log('Passport message: "Error/failed, incorrect username, cant be found"');
+      return done(null, false, {message: "Error/failed, incorrect username, can't be found"});
     }
     if (!user) {
       console.log('Passport message: "failed,  correct DB query, cant find user"');
