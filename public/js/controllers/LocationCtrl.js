@@ -5,6 +5,7 @@ angular.module('LocationCtrl', ['flash'])
           $scope.hideForm = true;
           $scope.locationName = {};
           $scope.showSuccess = false;
+          $scope.fullPath = "https://afternoon-castle-45268.herokuapp.com/";
 
 
           //Populate selection box with location names

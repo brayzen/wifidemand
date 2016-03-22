@@ -135,7 +135,15 @@
     </form>
   </section>
   <section class="container" ng-show="showSuccess">
-    <h2>Thank you for submittal.  Check your email inbox, We'll be in touch.</h2>
+    <h2>Thank you for submittal.  Check your email inbox.</h2>
+    <!-- Email -->
+    <h3>The speed by which we can bring this internet to your community is determined by you and sharing this with your neigbors.</h3>
+    <div class="container row">
+      <a href="mailto:?Subject=Finally a new internet option for our community!&amp;Body=I%20saw%20this%20and%20thought%20of%20you!%20%20More%20People%20=%20More%20Power%20=%20Better%20Internet%20=%20Lower%20Cost%20 {{fullPath}}"><img src="../img/email-btn.png" alt="Email"/></a>
+
+      <!-- Facebook -->
+      <a href="http://www.facebook.com/sharer.php?u={{fullPath}}" target="_blank"><img src="../img/facebook-btn.png" alt="Facebook" /></a>
+    </div>
   </section>
 </section>
 </div>
