@@ -1,13 +1,23 @@
-var User = require('./app/models/user');
-var crypto = require('crypto');
+var Promise = require('promise');
+console.log(Promise);
+var Email = require('./app/emails/welcome.js');
+var e = new Promise(Email('brayzen', 'brayzen@test.com'));
+console.log(e.toString());
 
-function makeAdminUser(username, password){
-  var salt1 = crypto.randomBytes(16).toString('hex');
-  var hash1 = crypto.pbkdf2Sync(password, salt1, 1000, 64).toString('hex');
-  console.log({username: username, salt: salt1, hash: hash1});
-}
 
-makeAdminUser(process.argv[2], process.argv[3]);
+
+//// As best as I can remember, I needed to use this function to create the proper object to
+//// then use mongo to connect to mongoLab
+// var User = require('./app/models/user');
+// var crypto = require('crypto');
+
+// function makeAdminUser(username, password){
+//   var salt1 = crypto.randomBytes(16).toString('hex');
+//   var hash1 = crypto.pbkdf2Sync(password, salt1, 1000, 64).toString('hex');
+//   console.log({username: username, salt: salt1, hash: hash1});
+// }
+
+// makeAdminUser(process.argv[2], process.argv[3]);
 
 
 

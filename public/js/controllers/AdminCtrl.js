@@ -3,12 +3,9 @@ angular.module('AdminCtrl', ['chart.js', 'flash', 'AuthService'])
     var counter = 1;
     $scope.locations = [];
     $scope.needShow = true;
-    $scope.formData = {};
-    $scope.formData.options = [];
     $scope.optionsToAdd = [{}];
     $scope.emailList = [];
     $scope.ifAuthed = false;
-
     $scope.tab = 1;
     // console.warn(Auth.getTsoken());
     //AUTH
@@ -16,9 +13,17 @@ angular.module('AdminCtrl', ['chart.js', 'flash', 'AuthService'])
       return $window.localStorage.jwtWIFI || null;
     };
 
+    function resetForm() {
+      $scope.formData = {};
+      $scope.formData.options = [];
+    };
+    resetForm();
 
     $scope.setTab = function(newValue){
       $scope.tab = newValue;
+      if (newValue === 2 || newValue === 6) {
+        resetForm();
+      }
     };
 
     $scope.isSet = function(tabName){
@@ -56,8 +61,7 @@ angular.module('AdminCtrl', ['chart.js', 'flash', 'AuthService'])
               $window.localStorage.jwtWIFI = res.data.token;
               loadLocations();
               $scope.headers = {headers: {Authorization: 'Bearer ' + $scope.getToken()}} || null;
-              $scope.formData = {};
-              $scope.formData.options = [];
+              resetForm();
            }, function(data){
               console.error(data);
               console.error(data.status);
@@ -89,11 +93,15 @@ angular.module('AdminCtrl', ['chart.js', 'flash', 'AuthService'])
 
 
     $scope.add =function(addOption){
-      counter++;
-      $scope.formData.options.push(angular.copy(addOption));
-      $scope.optionToAdd = '';
-      console.log($scope.optionToAdd);
-      $('#option-input').val('').attr('placeholder', 'Option-' + counter).focus();
+      if (addOption !== '') {
+        counter++;
+        $scope.formData.options.push(angular.copy(addOption));
+        $scope.optionToAdd = '';
+        console.log($scope.optionToAdd);
+        $('#option-input').val('').attr('placeholder', 'Option-' + counter).focus();
+      } else {
+        flash('Enter option before adding');
+      }
     };
 
     $scope.clearOptions = function(){
@@ -131,6 +139,35 @@ angular.module('AdminCtrl', ['chart.js', 'flash', 'AuthService'])
       }
     };
 
+    $scope.loadLocationData = function(location){
+      console.log(location + ' load location data');
+      $scope.formData = location;
+      $scope.formData.options = location.options;
+    }
+
+    $scope.updateLocation = function(){
+      if (isAuthed() && confirm("Are you sure you want to update/change this location?")) {
+        var locationName = $scope.formData.name;
+        console.log($scope.formData);
+        $http.post('admin/' + locationName + '/update', $scope.formData, $scope.headers)
+             .then(function(data){
+              console.log('update successfully');
+              console.log(data.data);
+              if (data.data.name === "CastError") {
+                flash('ERROR ' + data.data.name );
+              }
+              if (data.data.nModified === 0) {
+                flash('Nothing changed, likely tried to alter Project Name, Not allowed, make a new location.  Data is linked to this name');
+              } else {
+                $scope.setTab(1);
+              }
+             }, function(data, status){
+              console.log(data);
+              console.log(status);
+             });
+      }
+    }
+
     $scope.confirmDelete = function(location){
       if (isAuthed() && confirm("Are you sure you want to delete this location?")) {
         $http.post('admin/location/delete', location, $scope.headers)
@@ -159,7 +196,6 @@ angular.module('AdminCtrl', ['chart.js', 'flash', 'AuthService'])
              }).error(function(data, status){
               console.error(status);
               console.error(data);
-              flash(data.statusText);
              });
       }
     }

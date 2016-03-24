@@ -27,6 +27,23 @@ router.route('/location/new')
     });
   });
 
+router.route('/:location/update')
+  .post(auth, function(req, res) {
+    var query = {name: req.params.location};
+    var reqBody = req.body;
+    delete reqBody['_id'];
+    delete reqBody['name'];
+    var update = {$set: reqBody};
+
+    console.log('update request for: '+ query);
+    Location.update(query, update, function(err, result) {
+      if (err) { return res.json({error: err}); }
+      console.log("success in finding and updating: " + result);
+      res.json(result);
+    })
+  });
+
+
 //get all location objects
 router.route('/location/index')
   .get(auth, function(req, res){
@@ -43,7 +60,7 @@ router.route('/location/index')
 
 //All customers in specific location
 router.route('/:location/customers')
-  .get( function(req, res) {
+  .get(auth, function(req, res) {
     var location = req.params.location;
     Customer.find({locRef: location}, function(err, result) {
       if (err) {
@@ -57,7 +74,7 @@ router.route('/:location/customers')
 
 // Delete a location
 router.route('/location/delete')
-  .post(function(req, res){
+  .post(auth, function(req, res){
     console.log("post request to delete location");
     var reqName = req.body.name;
     var id = req.body;

@@ -22,9 +22,11 @@ console.log(process.env.NODE_ENV + ' :::: Environment');
 
 // config files
 var db = require('./config/db');
+console.log('DB: ' + db.url)
 
 // set our port
-var port = process.env.PORT || 5050;
+// var port = process.env.PORT || 5050;
+var port = 5447;
 
 // connect to our mongoDB database
 mongoose.connect(db.url);

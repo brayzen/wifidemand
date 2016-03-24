@@ -1,26 +1,41 @@
-module.exports = {
-  email: function(name, email){
-    return {
-        to: email,
+var fs = require('fs');
+var Promise = require('promise');
+var read = Promise.denodeify(fs.readFile)
+
+// var p = read('foo.json', 'utf8')
+//   .then(function (str) {
+//     return write('foo.json', JSON.stringify(JSON.parse(str), null, '  '), 'utf8')
+//   })
+
+var email = function(custName, custEmail){
+    read(__dirname + '/welcomeEmail.html', 'utf8')
+    .then(function(data) {
+      return data.toString().replace(/{{name}}/g, custName).replace(/{{email}}/g, custEmail);
+    }).then(function(data){
+      var obj = {
+        to: custEmail,
         from: process.env.FROM_EMAIL,
-        // from: 'brayzenone@gmail.com',
         subject: 'Welcome to Cooperative Wifi',
-        html: '<h1>Welcome from Raylife3</h1>' +
-
-              '<p> Hi ' + name + ',</p>' +
-
-              "<p> Thanks for signing up, you've been added to our customer list and we'll be contacting you as soon as we make any progress towards bringing your community better internet</p>" +
-
-              "<p> If you liked to know more about the technology we'll employ, please visit <a href='#'>this link</a></p>" +
-
-              "<p> In the meantime you can help speed up the process by forwarding your friends, neighbors, and community this email.</p>" +
-
-              "<p> If you prefer Facebook <a href='#'><button>HERE</button></a><p>" +
-
-              "<p> Sincerely,</p>" +
-
-              "<p> Raylife </p>"
-    }
-  }
+        html: data
+      };
+      return(obj);
+    })
+    // if (err) throw err;
+    // console.log('fs.readFile for WELCOME email was successful');
+    // var dataString = data.toString().replace(/{{name}}/g, custName).replace(/{{email}}/g, custEmail);
+    // console.log(dataString);
+    // return 'hello world';
+    // return {
+    //   to: custEmail,
+    //   from: process.env.FROM_EMAIL,
+    //   subject: 'Welcome to Cooperative Wifi',
+    //   html: dataString
+    // }
+  // });
 }
+
+module.exports = email;
+
+
+
 

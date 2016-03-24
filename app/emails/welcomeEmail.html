@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<head>
+  <title>Welcome Email COOPERATIVE WIFI</title>
+  <link href='https://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
+  <style type="text/css">
+    * {
+      box-sizing: border-box;
+      -moz-box-sizing: border-box;
+    }
+    body {
+      font-style: arial;
+      width:100%;d
+      padding: 2em;
+    }
+
+    .letter-body {
+      margin: 2em;
+    }
+
+    .fb-btn,
+    p,
+    button {
+      vertical-align: middle;
+    }
+
+    button img{
+      max-height: 3em;
+    }
+    footer {
+
+      font-size: .9em;
+      height: 100vh;
+      width: 100%;
+      margin-left: -1em;
+      margin-right: -20em;
+      background-color: #ccc;
+      padding: 2em;
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome to COOPERATIVE WIFI</h1>
+  <div class="letter-body">
+    <p> Hi {{name}},</p>
+
+    <p> Thanks for signing up, you've been added to our customer list and we'll be contacting you as soon as we make any progress towards bringing your community better internet.</p>
+
+    <p> If you would liked to know more about the technology we'll employ, please visit <a href='#'>this link.</a></p>
+
+    <p> In the meantime you can help speed up the process by forwarding your friends, neighbors, and community this email.</p>
+    <div class="fb-btn-group">
+      <p> If you prefer Facebook:
+        <button><a href="http://www.facebook.com/sharer.php?u=" target="_blank"><img class="" src="https://afternoon-castle-45268.herokuapp.com/img/facebook-btn.png" alt="Facebook" /></a></button>
+      </p>
+    </div>
+
+    <p> Sincerely, </p>
+
+    <p> Cooperative Wifi </p>
+  </div>
+
+  <footer>
+    <p>This email was sent to {{email}}.</p>
+    <p>If you have any questions or issues, please visit the help center.<p>
+    <p>If you did not intend to sign up for wifi in your area, please
+      <a href="https://www.cooperativewifi.com/customer/delete?email={{email}}">unsubscribe</a> to be removed from the list.
+    </p>
+    <p>&copy COOPERATIVE WIFI, inc.</p>
+    <p><a href="">Privacy Policy</a> | <a href="">Security Policy</a> | <a href="">Terms of Service</a></p>
+  </footer>
+</body>
