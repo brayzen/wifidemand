@@ -1,8 +1,35 @@
-var Promise = require('promise');
-console.log(Promise);
-var Email = require('./app/emails/welcome.js');
-var e = new Promise(Email('brayzen', 'brayzen@test.com'));
-console.log(e.toString());
+const EventEmitter = require('events');
+const emailData = new EventEmitter();
+// const util = require('util');
+var fs = require('fs');
+
+
+// util.inherits(dataEmitter, EventEmitter)
+
+function emailFetch(path, custName, custEmail) {
+  fs.readFile(path, (err, data) => {
+    if(err) { return err }
+    dataEmitter.emit('htmlFound', custName, custEmail, data)
+  })
+}
+
+function constructEmailObj(name, email, data){
+  var dataString = data.toString().replace(/{{name}}/g, name).replace(/{{email}}/g, email);
+  return {
+    to: email,
+    from: process.env.FROM_EMAIL,
+    subject: 'Welcome to Cooperative Wifi',
+    html: dataString
+  }
+}
+
+dataEmitter.on('htmlFound', (custName, custEmail, data) => {
+  console.log(constructEmailObj(custName, custEmail, data));
+})
+
+// emailFetch('./app/emails/welcomeEmail.html', 'Brian', 'Brizzle@rizzletown.com')
+module.exports = emailFetch;
+// module.exports = htmlFetch();
 
 
 

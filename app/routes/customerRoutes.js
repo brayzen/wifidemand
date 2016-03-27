@@ -1,30 +1,29 @@
+const EventEmitter = require('events');
 var express      = require('express');
 var router       = express.Router();
 var Customer     = require('../models/customer');
 var sendgrid     = require('sendgrid')(process.env.SENDGRID_KEY);
-var Email        = require('../emails/welcome')
+var Email        = require('../emails/emailFetch');
+var path         = require('path');
+
 
 router.route('/')
-  .post( function(req, res) {
-    console.log("%%%%%%%%%% request to make a CUSTOMER");
-    var reqbody   = req.body;
-    var custName  = reqbody.firstName,
-        custEmail = reqbody.email;
-    console.log(Email());
-    var welEmail = Email(custName, custEmail);
-    console.log('^^^^^^^^^^^^')
-    console.log('^^^^^^^^^^^^')
-    console.log('^^^^^^^^^^^^')
-    console.log(welEmail);
-    new Customer(reqbody).save(function(err, result) {
-      if (err) { res.send(err); }
-      sendgrid.send( welEmail, function( err, result ) {
-          if (err) { return console.error(err); }
-          console.log(result);
+      .post( function(req, res) {
+        console.log("request to make a CUSTOMER");
+        var subject   = 'Welcome to Cooperative Wifi';
+        var reqbody   = req.body;
+        var custName  = reqbody.firstName,
+            custEmail = reqbody.email;
+        var emailObj = Email.emailFetch('/welcomeEmail.html', custName, custEmail, subject);
+        new Customer(reqbody).save(function(err, result) {
+          if (err) { res.send(err); }
+          sendgrid.send( emailObj, function(err, message) {
+              if (err) { return console.error(err); }
+              console.log(message);
+          });
+          res.json(result);
+        });
       });
-      res.json(result);
-    });
-  });
 
 // returns the current TALLY number
 router.route('/tally/:location')
@@ -50,5 +49,17 @@ router.route('/tally/:location')
           }
         });
       });
+
+//customer unsubscribes from EMAIL
+router.route('/delete')
+      .post( (req, res) => {
+        console.log("customer has unsubscribed");
+        var custEmail = req.query.email;
+        Customer.remove({ email: custEmail }, (err, result) => {
+          if (err) { return res.json(err) }
+          var base = process.env.PWD
+          res.sendfile(base + '/public/views/unsubscribe.html');
+        })
+      })
 
 module.exports = router;
