@@ -16,13 +16,12 @@ var User           = require('./app/models/user');
 
 var auth = jwt({secret: process.env.SECRET_CRYPTO || 'secret', userProperty: 'payload'});
 
-// console.log(flash);
 // configuration ===========================================
 console.log(process.env.NODE_ENV + ' :::: Environment');
 
 // config files
 var db = require('./config/db');
-console.log('DB: ' + db.url)
+console.log('DB: ' + db.url);
 
 // set our port
 // var port = process.env.PORT || 5050;
@@ -50,7 +49,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-// routes ==================================================
+// routes ==================================================git
 app.get('/login', function(req, res){
     console.log('GET login route');
     res.sendfile('./public/views/templates/login.html');
