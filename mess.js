@@ -1,13 +1,50 @@
-var User = require('./app/models/user');
-var crypto = require('crypto');
+const EventEmitter = require('events');
+const emailData = new EventEmitter();
+// const util = require('util');
+var fs = require('fs');
 
-function makeAdminUser(username, password){
-  var salt1 = crypto.randomBytes(16).toString('hex');
-  var hash1 = crypto.pbkdf2Sync(password, salt1, 1000, 64).toString('hex');
-  console.log({username: username, salt: salt1, hash: hash1});
+
+// util.inherits(dataEmitter, EventEmitter)
+
+function emailFetch(path, custName, custEmail) {
+  fs.readFile(path, (err, data) => {
+    if(err) { return err }
+    dataEmitter.emit('htmlFound', custName, custEmail, data)
+  })
 }
 
-makeAdminUser(process.argv[2], process.argv[3]);
+function constructEmailObj(name, email, data){
+  var dataString = data.toString().replace(/{{name}}/g, name).replace(/{{email}}/g, email);
+  return {
+    to: email,
+    from: process.env.FROM_EMAIL,
+    subject: 'Welcome to Cooperative Wifi',
+    html: dataString
+  }
+}
+
+dataEmitter.on('htmlFound', (custName, custEmail, data) => {
+  console.log(constructEmailObj(custName, custEmail, data));
+})
+
+// emailFetch('./app/emails/welcomeEmail.html', 'Brian', 'Brizzle@rizzletown.com')
+module.exports = emailFetch;
+// module.exports = htmlFetch();
+
+
+
+//// As best as I can remember, I needed to use this function to create the proper object to
+//// then use mongo to connect to mongoLab
+// var User = require('./app/models/user');
+// var crypto = require('crypto');
+
+// function makeAdminUser(username, password){
+//   var salt1 = crypto.randomBytes(16).toString('hex');
+//   var hash1 = crypto.pbkdf2Sync(password, salt1, 1000, 64).toString('hex');
+//   console.log({username: username, salt: salt1, hash: hash1});
+// }
+
+// makeAdminUser(process.argv[2], process.argv[3]);
 
 
 

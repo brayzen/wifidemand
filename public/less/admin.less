@@ -27,8 +27,6 @@
   border-radius: @border-radius;
   background: #EEE;
   min-height: 30rem;
-  max-height: 50rem;
-
 }
 
 .table-css {
@@ -48,10 +46,15 @@
 
 
 .t-cell {
-  word-wrap: break-word;
-  min-width: 125px;
   display: table-cell;
+  word-wrap: break-word;
+  max-width: 50px;
   border-bottom: 1px solid black;
+  margin: 1em;
+  padding: 0;
+  .locname {
+    max-width: 150px;
+  }
 }
 
 .th-cell {

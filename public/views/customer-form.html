@@ -25,12 +25,12 @@
               </div>
             </div>
           </div>
-        <p class="col-xs-12">{{location.reqNum - tally}} more people needed</p>
+        <p class="col-xs-12" ng-hide="{{location.reqNum < tally}}">{{location.reqNum - tally}} more people needed</p>
         </div>
     </div>
     <form name="customerForm" ng-hide="hideForm" class="col-xs-12 col-md-4" ng-submit novalidate>
         <hr>
-        <h3 class="form-head">Select your preferred option and Add your name to list:</h3>
+        <h3 class="form-head">Select your preferred option, add your name to list and tell your friends to do the same:</h3>
       <div class="form-group location-options">
         <label for="options">Choose an Option</label>
         <div class="radio" ng-repeat="option in location.options track by $index">

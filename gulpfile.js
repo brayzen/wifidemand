@@ -70,7 +70,8 @@ gulp.task('start', function () {
 
 gulp.task('watch', function() {
   gulp.watch('./public/less/*.less', ['lessify', 'start'])
-  gulp.watch('./public/js/**', ['jshint']);
+  gulp.watch('./public/js/**', ['jshint', 'start']);
+  gulp.watch('.app/**/*.js', ['jshint', 'start']);
 });
 
 gulp.task('concat', function() {
@@ -81,5 +82,5 @@ gulp.task('concat', function() {
 });
 
 
-gulp.task('default', ['jshint', 'clean', 'lessify','start', 'watch']);
+gulp.task('default', ['jshint', 'clean', 'lessify', 'start', 'watch']);
 gulp.task('produce', ['lessify', 'start'])

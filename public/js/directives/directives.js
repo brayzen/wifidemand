@@ -20,5 +20,13 @@ angular.module('Directives', [])
       restrict: 'E',
       transclude: false,
       templateUrl: "../views/templates/add-location.html"
+    }
+  })
+
+  .directive('editLocation', function(){
+    return {
+      restrict: 'E',
+      transclude: false,
+      templateUrl: "../views/templates/edit-location.html"
     };
   });
