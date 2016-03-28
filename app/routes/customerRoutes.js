@@ -51,14 +51,15 @@ router.route('/tally/:location')
       });
 
 //customer unsubscribes from EMAIL
-router.route('/delete')
+router.route('/remove')
       .post( (req, res) => {
         console.log("customer has unsubscribed");
         var custEmail = req.query.email;
-        Customer.remove({ email: custEmail }, (err, result) => {
+        Customer.update({ email: custEmail }, {$set: {subscribed: false}}, (err, result) => {
           if (err) { return res.json(err) }
-          var base = process.env.PWD
-          res.sendfile(base + '/public/views/unsubscribe.html');
+          var base = process.env.PWD;
+          res.sendfile(base + '/public/views/unsubscribe.html')
+          // res.json(result);
         })
       })
 

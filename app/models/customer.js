@@ -10,5 +10,6 @@ module.exports = mongoose.model('Customer', { locRef: { type: String, default: '
                                               zip: {type: String, default: ''},
                                               phone: {type: String},
                                               choice: {type: Number, default: 0},
+                                              subscribed: {type: Boolean, default: true},
                                               createdAt: {type: Date, default: Date.now()}
                                             });
