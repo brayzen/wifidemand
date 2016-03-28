@@ -52,14 +52,13 @@ router.route('/tally/:location')
 
 //customer unsubscribes from EMAIL
 router.route('/remove')
-      .post( (req, res) => {
+      .get( (req, res) => {
         console.log("customer has unsubscribed");
         var custEmail = req.query.email;
         Customer.update({ email: custEmail }, {$set: {subscribed: false}}, (err, result) => {
           if (err) { return res.json(err) }
           var base = process.env.PWD;
-          res.sendfile(base + '/public/views/unsubscribe.html')
-          // res.json(result);
+          res.sendFile(base + '/public/views/unsubscribe.html');
         })
       })
 
