@@ -24,8 +24,7 @@ var db = require('./config/db');
 console.log('DB: ' + db.url);
 
 // set our port
-// var port = process.env.PORT || 5050;
-var port = 5447;
+var port = process.env.PORT || 5447;
 
 // connect to our mongoDB database
 mongoose.connect(db.url);
@@ -68,8 +67,6 @@ app.post('/login', function(req, res, next){
       return res.status(401).json(info);
     }
   })(req, res, next)
-
-
 });
 
 app.use('/admin', auth,  admin);
@@ -83,6 +80,7 @@ app.get('/', function(req, res) {
 app.on('listening', function(){
   console.log('ok, server is running');
 })
+
 app.listen(port);
 
 // shoutout to the user

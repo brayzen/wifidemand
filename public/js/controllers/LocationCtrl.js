@@ -1,6 +1,6 @@
 angular.module('LocationCtrl', ['flash'])
        .controller('LocationController', function($scope, $http, flash) {
-          $scope.formData = {g};
+          $scope.formData = {};
           $scope.hidePage = true;
           $scope.hideForm = true;
           $scope.locationName = {};
