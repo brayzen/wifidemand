@@ -6,7 +6,6 @@ var sendgrid     = require('sendgrid')(process.env.SENDGRID_KEY);
 var Email        = require('../emails/emailFetch');
 var path         = require('path');
 
-
 router.route('/')
       .post( function(req, res) {
         console.log("request to make a CUSTOMER");

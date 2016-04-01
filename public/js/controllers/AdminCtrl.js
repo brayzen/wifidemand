@@ -66,7 +66,6 @@ angular.module('AdminCtrl', ['chart.js', 'flash', 'AuthService'])
               console.error(data);
               console.error(data.status);
               flash('Incorrect creditials: "' + data.statusText + '"');
-              // $scope.formData = {};
            });
     };
 
@@ -75,8 +74,6 @@ angular.module('AdminCtrl', ['chart.js', 'flash', 'AuthService'])
         if(isAuthed()){
           var token = $scope.getToken();
           console.log('making a call to load locations');
-          console.warn(token);
-          // var data = $http.headers.common['Authorization'] = 'Bearer ' + token;
           $http.get('/admin/location/index', {headers: {Authorization: 'Bearer ' + token}})
                .success(function(data){
                 console.info(data);
@@ -120,8 +117,8 @@ angular.module('AdminCtrl', ['chart.js', 'flash', 'AuthService'])
               console.info("disply success on screen");
               $scope.formHide = true;
               $scope.locations.push($scope.formData);
-              $scope.formData = {};
-              $scope.clearOptions();
+              resetForm()
+              counter = 1;
              }).error(function(status, data){
               console.error(status);
               console.error(data);
@@ -193,6 +190,7 @@ angular.module('AdminCtrl', ['chart.js', 'flash', 'AuthService'])
              .success(function(data){
               tallyOptions(data);
               $scope.selected.customers = data;
+              console.log($scope.selected.customers);
              }).error(function(data, status){
               console.error(status);
               console.error(data);
@@ -243,12 +241,16 @@ angular.module('AdminCtrl', ['chart.js', 'flash', 'AuthService'])
     $scope.copyCSEmails = function(customers) {
       var emailString = '';
       $scope.selected.customers.forEach(function(customer, index){
-        if (index % 5 === 0){
-          emailString += '\n' + customer.email + ', ';
-        } else if (customers[index] === undefined){
-          emailString += customer.email;
+        if(customer.subscribed === false || emailString.indexOf(customer.email) > -1) {
+          return
         } else {
-          emailString += customer.email + ', ';
+          if (index % 5 === 0){
+            emailString += '\n' + customer.email + ', ';
+          } else if (customers[index] === undefined){
+            emailString += customer.email;
+          } else {
+            emailString += customer.email + ', ';
+          }
         }
       });
       $scope.selected.emails = emailString;
