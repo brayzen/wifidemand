@@ -15,10 +15,10 @@ router.route('/location/new')
     console.log("Post request for a new location");
     var reqData = req.body;
     var reqName = reqData.name;
-    new Locnames({name: reqName}).save(function(err, result){
-      if (err)
-        res.json({error: err});
-      });
+    // new Locnames({name: reqName}).save(function(err, result){
+    //   if (err)
+    //     res.json({error: err});
+    //   });
     new Location(reqData).save(function(err, result){
       if (err) {
         console.error(err);
@@ -82,11 +82,7 @@ router.route('/location/delete')
     Location.remove({"_id": id}, function(err, result){
       if (err) { return res.json({error: err} );}
       console.log("success: " + result);
-      Locnames.remove({name: reqName}, function(err, result){
-        if (err) { return res.json(err); }
-        console.log('deleted from both collections');
-        res.json({success: 'deleted from both collections', result: result});
-      });
+      res.json({success: 'deleted location', result: result});
     });
   });
 
