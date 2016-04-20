@@ -2,13 +2,13 @@ var express = require('express');
 var router = express.Router();
 // grab the location model we just created
 var Location = require('../models/location');
-var Locnames = require('../models/locationNames');
+// var Locnames = require('../models/locationNames');
 
 
 router.route('/get/names')
   .get( function(req,res) {
     console.log("request for LocNames");
-    Locnames.find(function(err, result){
+    Location.find({}, { name:1,  _id:0 }, function(err, result){
       if (err) {
          return res.send(err);
       }
