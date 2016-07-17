@@ -144,8 +144,7 @@ angular.module('AdminCtrl', ['chart.js', 'flash', 'AuthService'])
 
     $scope.updateLocation = function(){
       if (isAuthed() && confirm("Are you sure you want to update/change this location?")) {
-        var locationName = $scope.formData.name;
-        console.log($scope.formData);
+        var locationName = encodeURIComponent($scope.formData.name);
         $http.post('admin/' + locationName + '/update', $scope.formData, $scope.headers)
              .then(function(data){
               console.log('update successfully');
@@ -153,12 +152,12 @@ angular.module('AdminCtrl', ['chart.js', 'flash', 'AuthService'])
               if (data.data.name === "CastError") {
                 flash('ERROR ' + data.data.name );
               }
+             }, function(data, status){
               if (data.data.nModified === 0) {
                 flash('Nothing changed, likely tried to alter Project Name, Not allowed, make a new location.  Data is linked to this name');
               } else {
                 $scope.setTab(1);
               }
-             }, function(data, status){
               console.log(data);
               console.log(status);
              });

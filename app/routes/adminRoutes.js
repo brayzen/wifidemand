@@ -14,7 +14,7 @@ router.route('/location/new')
   .post(auth, function(req, res){
     console.log("Post request for a new location");
     var reqData = req.body;
-    var reqName = reqData.name;
+    // var reqName = reqData.name;
     // new Locnames({name: reqName}).save(function(err, result){
     //   if (err)
     //     res.json({error: err});
@@ -30,17 +30,21 @@ router.route('/location/new')
 
 router.route('/:location/update')
   .post(auth, function(req, res) {
-    var query = {name: req.params.location};
-    var reqBody = req.body;
-    delete reqBody['_id'];
-    delete reqBody['name'];
-    var update = {$set: reqBody};
+    var query = {_id: req.body._id};
+    delete req.body._id;
+    var update = {$set: req.body};
 
     console.log('update request for: '+ query);
+    console.log(req.params.location);
+    console.log(req.body)
+
     Location.update(query, update, function(err, result) {
-      if (err) { return res.json({error: err}); }
-      console.log("success in finding and updating: " + result);
-      res.json(result);
+      console.log(err)
+      if (err) { return res.status(500).json({error: err}); }
+      if (result.nModified === 0){
+        return res.status(400).json({error: "check reqBody, nothing was modified in DB"})
+      }
+      res.status(200).json(result);
     })
   });
 
