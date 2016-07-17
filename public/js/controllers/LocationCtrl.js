@@ -24,7 +24,7 @@ angular.module('LocationCtrl', ['flash'])
 
           //Populate Selected with location specific information
           $scope.getLocationData = function(){
-            name = $scope.selection1;
+            var name = encodeURIComponent($scope.selection1);
 
             $http.get('/api/location/' + name)
                 .success(function(data){
@@ -55,12 +55,12 @@ angular.module('LocationCtrl', ['flash'])
                  }).error(function(status, data){
                   console.error(status);
                   console.error(data);
-                  flash('error', data);
+                  // flash('error', data);
                  });
           };
 
           function getCustomerTally(location) {
-            var name = location.name;
+            var name = encodeURIComponent(location.name);
             var reqNum = location.reqNum;
             $http.get('/api/customer/tally/'+ name + '?reqNum=' + reqNum )
                  .then(function(res){
@@ -69,7 +69,7 @@ angular.module('LocationCtrl', ['flash'])
                  },function(data, status){
                   console.error(data);
                   console.error(status);
-                  flash('error', data);
+                  // flash('error', data);
                  });
           }
       });
