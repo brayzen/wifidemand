@@ -63,7 +63,7 @@ angular.module('AdminCtrl', ['chart.js', 'flash', 'AuthService'])
               $scope.headers = {headers: {Authorization: 'Bearer ' + $scope.getToken()}} || null;
               resetForm();
            }, function(data){
-              console.error(data);
+              // console.error(data);
               console.error(data.status);
               flash('Incorrect creditials: "' + data.statusText + '"');
            });
@@ -76,11 +76,11 @@ angular.module('AdminCtrl', ['chart.js', 'flash', 'AuthService'])
           console.log('making a call to load locations');
           $http.get('/admin/location/index', {headers: {Authorization: 'Bearer ' + token}})
                .success(function(data){
-                console.info(data);
+                // console.info(data);
                 $scope.locations = data;
                }).error(function(status, data){
                 console.error(status);
-                console.warn(data);
+                // console.warn(data);
                 flash(data);
                });
          }
@@ -94,7 +94,7 @@ angular.module('AdminCtrl', ['chart.js', 'flash', 'AuthService'])
         counter++;
         $scope.formData.options.push(angular.copy(addOption));
         $scope.optionToAdd = '';
-        console.log($scope.optionToAdd);
+        // console.log($scope.optionToAdd);
         $('#option-input').val('').attr('placeholder', 'Option-' + counter).focus();
       } else {
         flash('Enter option before adding');
@@ -113,15 +113,14 @@ angular.module('AdminCtrl', ['chart.js', 'flash', 'AuthService'])
       if (isAuthed()) {
         $http.post('/admin/location/new', $scope.formData, $scope.headers)
              .success(function(data){
-              console.log(data);
-              console.info("disply success on screen");
+              // console.log(data);
               $scope.formHide = true;
               $scope.locations.push($scope.formData);
               resetForm()
               counter = 1;
              }).error(function(status, data){
               console.error(status);
-              console.error(data);
+              // console.error(data);
               flash(data);
              });
       }
@@ -137,7 +136,7 @@ angular.module('AdminCtrl', ['chart.js', 'flash', 'AuthService'])
     };
 
     $scope.loadLocationData = function(location){
-      console.log(location + ' load location data');
+      console.log(location + '::: load location data');
       $scope.formData = location;
       $scope.formData.options = location.options;
     }
@@ -147,8 +146,8 @@ angular.module('AdminCtrl', ['chart.js', 'flash', 'AuthService'])
         var locationName = encodeURIComponent($scope.formData.name);
         $http.post('admin/' + locationName + '/update', $scope.formData, $scope.headers)
              .then(function(data){
-              console.log('update successfully');
-              console.log(data.data);
+              // console.log('update successfully');
+              // console.log(data.data);
               if (data.data.name === "CastError") {
                 flash('ERROR ' + data.data.name );
               }
@@ -158,7 +157,7 @@ angular.module('AdminCtrl', ['chart.js', 'flash', 'AuthService'])
               } else {
                 $scope.setTab(1);
               }
-              console.log(data);
+              // console.log(data);
               console.log(status);
              });
       }
@@ -168,13 +167,13 @@ angular.module('AdminCtrl', ['chart.js', 'flash', 'AuthService'])
       if (isAuthed() && confirm("Are you sure you want to delete this location?")) {
         $http.post('admin/location/delete', location, $scope.headers)
              .success(function(data){
-              console.log(data);
+              // console.log(data);
               // displayMessage(data);
               var index = $scope.locations.indexOf( location );
               $scope.locations.splice(index, 1);
              }).error(function(data, status){
               console.error(status);
-              console.warn(data);
+              // console.warn(data);
               flash(data);
              });
       }
@@ -183,16 +182,16 @@ angular.module('AdminCtrl', ['chart.js', 'flash', 'AuthService'])
     function getCustomers(location) {
       if (isAuthed()){
         console.log('getting all customers for ' + location.name );
-        var locationName = location.name;
+        var locationName = encodeURIComponent(location.name);
 
         $http.get('/admin/' + locationName + '/customers', $scope.headers)
              .success(function(data){
               tallyOptions(data);
               $scope.selected.customers = data;
-              console.log($scope.selected.customers);
+              // console.log($scope.selected.customers);
              }).error(function(data, status){
               console.error(status);
-              console.error(data);
+              // console.error(data);
              });
       }
     }
@@ -214,7 +213,7 @@ angular.module('AdminCtrl', ['chart.js', 'flash', 'AuthService'])
       });
       $scope.selected.tally = tally;
       $scope.selected.score = score;
-      console.log(score);
+      // console.log(score);
       makeChart($scope.selected.score);
     }
 
